@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HWVCTS5 无畏契约比赛报名</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
@@ -71,7 +71,7 @@
             pointer-events: none;
         }
 
-        .title-container { text-align: center; margin-bottom: 60px; }
+        .title-container { text-align: center; margin-bottom: 60px; padding: 0 20px; }
         .title-badge {
             display: inline-block; padding: 6px 20px; background: rgba(255, 70, 85, 0.15);
             border: 1px solid rgba(255, 70, 85, 0.3); border-radius: 20px;
@@ -140,15 +140,23 @@
         .dialogue-box::before {
             content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #ff4655, transparent);
         }
+        
+        /* 增加对话框滚动条样式 */
+        .dialogue-box::-webkit-scrollbar { width: 4px; }
+        .dialogue-box::-webkit-scrollbar-track { background: transparent; }
+        .dialogue-box::-webkit-scrollbar-thumb { background: rgba(255, 70, 85, 0.5); border-radius: 2px; }
+
         .dialogue-speaker {
             font-size: 14px; font-weight: 700; color: #ff4655; letter-spacing: 2px; text-transform: uppercase;
-            margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 70, 85, 0.15);
+            margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 70, 85, 0.15); flex-shrink: 0;
         }
-        .dialogue-text { font-size: 17px; line-height: 1.8; color: rgba(255, 255, 255, 0.85); flex-grow: 1; font-weight: 300; }
+        .dialogue-text { font-size: 17px; line-height: 1.8; color: rgba(255, 255, 255, 0.85); font-weight: 300; margin-bottom: 15px;}
         .dialogue-text .highlight { color: #ff4655; font-weight: 500; }
+        
+        #dialogueContent { flex-grow: 1; display: flex; flex-direction: column; }
 
         /* 选项按钮 */
-        .choices-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .choices-container { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
         .choice-btn {
             padding: 14px 24px; font-size: 15px; color: rgba(255, 255, 255, 0.8); background: rgba(255, 70, 85, 0.08);
             border: 1px solid rgba(255, 70, 85, 0.2); border-radius: 2px; cursor: pointer; transition: all 0.3s ease;
@@ -158,7 +166,7 @@
         .choice-btn::before { content: '▸'; margin-right: 10px; color: #ff4655; }
 
         /* 表单输入 */
-        .form-group { margin-top: 15px; }
+        .form-group { margin-top: 10px; }
         .form-group label { display: block; font-size: 13px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px; letter-spacing: 1px; }
         .form-input {
             width: 100%; max-width: 350px; padding: 12px 16px; font-size: 15px; color: #fff;
@@ -178,7 +186,7 @@
         .form-error:empty::before { content: ''; }
 
         /* 统计数据表单 */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
         .stat-item { position: relative; }
         .stat-label-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
         .stat-label-row label { font-size: 13px; color: rgba(255, 255, 255, 0.5); letter-spacing: 1px; margin: 0; }
@@ -202,7 +210,7 @@
 
         /* 确认/下一步按钮 */
         .next-btn {
-            margin-top: 20px; padding: 12px 36px; font-size: 14px; font-weight: 600; letter-spacing: 2px; color: #fff;
+            margin-top: auto; padding: 12px 36px; font-size: 14px; font-weight: 600; letter-spacing: 2px; color: #fff;
             background: linear-gradient(135deg, #ff4655, #cc2233); border: none; cursor: pointer; transition: all 0.3s ease;
             font-family: 'Noto Sans SC', sans-serif; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%); align-self: flex-end;
         }
@@ -210,7 +218,7 @@
         .next-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* 结果界面的分数 */
-        .score-display { text-align: center; margin: 20px 0; }
+        .score-display { text-align: center; margin: 10px 0; }
         .score-number {
             font-size: 64px; font-weight: 900; background: linear-gradient(135deg, #ff4655, #ffd700, #ff4655);
             background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: scoreGlow 2s ease-in-out infinite;
@@ -251,9 +259,74 @@
         .fade-in { animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .kast-input-wrapper { position: relative; display: inline-flex; align-items: center; }
+        .kast-input-wrapper { position: relative; display: inline-flex; align-items: center; width: 100%; }
         .kast-input-wrapper .form-input { padding-right: 30px; }
         .kast-suffix { position: absolute; right: 10px; color: rgba(255,255,255,0.4); font-size: 14px; pointer-events: none; }
+
+        /* ================= 手机端适配 (Media Queries) ================= */
+        @media screen and (max-width: 768px) {
+            /* 标题界面 */
+            .main-title { font-size: 42px; letter-spacing: 4px; }
+            .sub-title { font-size: 12px; letter-spacing: 2px; }
+            .start-btn { padding: 15px 40px; font-size: 16px; }
+
+            /* 核心布局由左右改为上下 */
+            .game-container.active { flex-direction: column; }
+            
+            .character-area {
+                position: relative;
+                width: 100%;
+                height: 40%;
+                align-items: flex-end;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .character-img {
+                max-height: 95%;
+                max-width: 90%;
+            }
+            .character-name-tag {
+                top: 15px; left: 15px;
+            }
+            .character-name-tag .agent-name { font-size: 24px; }
+            .character-name-tag .agent-role { font-size: 12px; }
+            
+            /* 调整情绪指示器位置到右上角 */
+            .mood-indicator {
+                top: 15px; right: 15px; bottom: auto; left: auto;
+            }
+
+            .dialogue-area {
+                position: relative;
+                width: 100%;
+                height: 60%;
+                padding: 10px 15px 15px 15px;
+                flex-shrink: 1;
+            }
+            .dialogue-box {
+                padding: 20px 15px;
+                height: 100%;
+                min-height: auto;
+                overflow-y: auto; /* 允许内部滚动，防止键盘遮挡 */
+            }
+            .dialogue-text { font-size: 15px; line-height: 1.6; }
+            .choice-btn { padding: 12px 16px; font-size: 14px; }
+            
+            /* 表单元素适配 */
+            .form-input { max-width: 100%; }
+            .stats-grid { 
+                grid-template-columns: 1fr; /* 战绩栏改为单列 */
+                gap: 10px; 
+            }
+            .next-btn { margin-top: 15px; align-self: center; width: 100%; text-align: center; }
+            
+            /* 分数展示 */
+            .score-number { font-size: 48px; }
+            
+            /* 隐藏不需要的桌面端装饰 */
+            .divider { display: none; }
+            .deco-lines { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -470,13 +543,25 @@
         function typeText(element, text, speed = 30) {
             return new Promise((resolve) => {
                 element.innerHTML = ''; let i = 0; const cursor = document.createElement('span'); cursor.className = 'typing-cursor';
+                
+                function scrollToBottom() {
+                    const box = document.getElementById('dialogueBox');
+                    if (box) box.scrollTop = box.scrollHeight;
+                }
+
                 function type() {
                     if (i < text.length) {
                         if (text.substring(i).startsWith('<')) {
                             const endTag = text.indexOf('>', i); element.innerHTML = text.substring(0, endTag + 1); i = endTag + 1;
                         } else { element.innerHTML = text.substring(0, i + 1); i++; }
-                        element.appendChild(cursor); setTimeout(type, speed);
-                    } else { element.innerHTML = text; resolve(); }
+                        element.appendChild(cursor); 
+                        scrollToBottom();
+                        setTimeout(type, speed);
+                    } else { 
+                        element.innerHTML = text; 
+                        scrollToBottom();
+                        resolve(); 
+                    }
                 }
                 type();
             });
@@ -494,6 +579,8 @@
                         <button class="choice-btn" onclick="selectRole('initiator')">先锋 — 侦察先行</button>
                         <button class="choice-btn" onclick="selectRole('controller')">烟位 — 掌控战场</button>
                     </div>`;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
             });
         }
 
@@ -579,14 +666,18 @@
             typeText(document.getElementById('dialogueText'), agent.dialogues.stats).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
                     <div class="stats-grid fade-in">
-                        <div class="stat-item"><div class="stat-label-row"><label>ACS</label></div><input type="text" class="form-input" id="acsInput" placeholder="例如: 230"></div>
-                        <div class="stat-item"><div class="stat-label-row"><label>ADR</label></div><input type="text" class="form-input" id="adrInput" placeholder="例如: 150"></div>
-                        <div class="stat-item"><div class="stat-label-row"><label>KDA</label></div><input type="text" class="form-input" id="kdaInput" placeholder="例如: 1.5"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>ACS</label></div><input type="number" class="form-input" id="acsInput" placeholder="例如: 230"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>ADR</label></div><input type="number" class="form-input" id="adrInput" placeholder="例如: 150"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>KDA</label></div><input type="number" step="0.01" class="form-input" id="kdaInput" placeholder="例如: 1.5"></div>
                         <div class="stat-item"><div class="stat-label-row"><label>KAST</label></div>
-                            <div class="kast-input-wrapper"><input type="text" class="form-input" id="kastInput" placeholder="例如: 72"><span class="kast-suffix">%</span></div>
+                            <div class="kast-input-wrapper"><input type="number" class="form-input" id="kastInput" placeholder="例如: 72"><span class="kast-suffix">%</span></div>
                         </div>
                     </div><div class="form-error" id="statsError" style="margin-top:10px;"></div>
                     <button class="next-btn fade-in" onclick="submitStats()" style="margin-top:15px;">确 认 ▸</button>`;
+                
+                // 确保长表单出现时滚动到底部
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
             });
         }
 
@@ -617,7 +708,7 @@
             typeText(document.getElementById('dialogueText'), agent.dialogues.dataSource).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
                     <div class="form-group fade-in">
-                        <label>数据来源赛季（请选择排位场次 ≥ 10 场的赛季）</label>
+                        <label>数据来源赛季（请选择场次 ≥ 10 场的赛季）</label>
                         <select class="form-input" id="dataSourceInput"><option value="">-- 请选择赛季 --</option>${options}</select>
                         <div class="form-error" id="dataSourceError"></div>
                     </div><button class="next-btn fade-in" onclick="submitDataSource()">确 认 ▸</button>`;
@@ -677,12 +768,16 @@
                 content.innerHTML = `
                     <div class="submit-status success fade-in">✅ 报名数据与分组已成功写入数据库！</div>
                     <button class="next-btn fade-in" onclick="showResult()" style="margin-top:15px;">查 看 报 名 结 果 ▸</button>`;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
             } catch (err) {
                 gameState.isSubmitted = false;
                 content.innerHTML = `
                     <div class="submit-status error fade-in">❌ 数据提交失败，因网络原因连接服务器超时。</div>
                     <button class="next-btn fade-in" onclick="submitDataSource()" style="margin-top:15px;">重 试 ▸</button>
                     <button class="next-btn fade-in" onclick="showResult()" style="margin-top:10px; background: rgba(255,255,255,0.1);">跳 过，查 看 本 地 结 果 ▸</button>`;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
             }
         }
 
@@ -720,9 +815,9 @@
                 let retryHtml = '';
                 if (!gameState.isSubmitted) {
                     retryHtml = `
-                        <div style="margin-top:20px; text-align:center; padding: 15px; border: 1px dashed rgba(255,70,85,0.5); border-radius: 4px;">
-                            <p style="color:#ff8a80; font-size:13px; margin-bottom:10px;">⚠ 您的数据尚未成功提交至服务器</p>
-                            <button class="next-btn" id="retrySubmitBtn" onclick="retrySubmission()" style="margin-top:0; background: linear-gradient(135deg, #ff9800, #f57c00);">重 试 提 交 报 名 ▸</button>
+                        <div style="margin-top:15px; text-align:center; padding: 10px; border: 1px dashed rgba(255,70,85,0.5); border-radius: 4px;">
+                            <p style="color:#ff8a80; font-size:12px; margin-bottom:10px;">⚠ 您的数据尚未成功提交至服务器</p>
+                            <button class="next-btn" id="retrySubmitBtn" onclick="retrySubmission()" style="margin-top:0; width: 100%; background: linear-gradient(135deg, #ff9800, #f57c00);">重 试 提 交 报 名 ▸</button>
                             <div id="retryStatusText" style="font-size:12px; margin-top:8px; display:none;"></div>
                         </div>`;
                 }
@@ -739,8 +834,11 @@
                         <p>预分组状态: <span style="color:#ff4655; font-weight:bold;">${gameState.preGroup}</span></p>
                     </div>
                     ${retryHtml}
-                    <button class="next-btn fade-in" onclick="location.reload()" style="margin-top:25px; align-self:center;">重 新 报 名 ▸</button>
+                    <button class="next-btn fade-in" onclick="location.reload()" style="margin-top:20px; align-self:center; width: 100%; text-align: center;">重 新 报 名 ▸</button>
                 `;
+                
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
             });
         }
     </script>
