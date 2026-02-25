@@ -1,0 +1,9 @@
+[build]
+  # 部署时自动运行安装依赖的命令
+  command = "npm install"
+  # 静态文件发布的目录，如果你的 index.html 在根目录就写 "."
+  publish = "."
+
+[functions]
+  # 使用 esbuild 打包函数，确保依赖被正确打包进去
+  node_bundler = "esbuild"
