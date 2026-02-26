@@ -382,6 +382,13 @@
                 dialogues: {
                     greet: '哟！又有新人要来参加比赛了？速度跟上，别拖后腿！',
                     name: '先报上名来吧——你叫什么？战场上可不兴匿名作战。',
+                    foundName: (name, id) => `等等，${name}... 看着眼熟啊。你的ID是不是 <span class="highlight">${id}</span>？`,
+                    choiceYes: '是我！',
+                    choiceNo: '认错人了吧？',
+                    welcomeBack: '哈，我就知道！怎么，是不是觉得自己变强了，想来刷新一下数据？还是单纯想看看现在的排行榜？',
+                    choiceUpdate: '我要更新战绩！',
+                    choiceView: '随便看看报名情况。',
+                    afterView: '看完了没？要是觉得别人分数太高，随时可以更新你的数据！',
                     nameResponse: (name) => `${name}？还行，这名字听起来挺利索的。跟我的风一样快！`,
                     gameId: '你的游戏ID是什么？我得确认下你不是来打酱油的。',
                     gameIdResponse: (id) => `${id}，记住了。下次排位见到你可别跑！`,
@@ -400,6 +407,13 @@
                 dialogues: {
                     greet: '又一个送上门的猎物？呵，让我看看你够不够资格站在我身边。',
                     name: '告诉我你的名字，让我记住……下一个被我碾压的人叫什么。',
+                    foundName: (name, id) => `慢着……${name}。你的灵魂气息我品尝过。你的ID，是 <span class="highlight">${id}</span> 对吧？`,
+                    choiceYes: '没错。',
+                    choiceNo: '你可能记错了。',
+                    welcomeBack: '我就知道……那些被我记住的灵魂总会回来。说吧，是想奉上更美味的战绩，还是想审视你的猎物们？',
+                    choiceUpdate: '我要更新战绩。',
+                    choiceView: '我想看报名列表。',
+                    afterView: '猎物的挣扎总是如此有趣……准备好刷新你的战绩了吗？',
                     nameResponse: (name) => `${name}……嗯，这个名字，我会记在心里的。别让我失望。`,
                     gameId: '你的游戏ID呢？我想看看你在战场上的模样。',
                     gameIdResponse: (id) => `${id}？有点意思。希望你在比赛里也这么自信。`,
@@ -418,6 +432,13 @@
                 dialogues: {
                     greet: '嘘……有人来了。别紧张，我的线已经布好了。来，坐下聊聊。',
                     name: '每个人都有秘密，但我至少需要知道你的名字。放心，不会告诉别人。',
+                    foundName: (name, id) => `嘘……${name}。我的情报网里有这个名字。让我查查……你的ID是 <span class="highlight">${id}</span>，对吗？`,
+                    choiceYes: '是的，情报很准。',
+                    choiceNo: '不，你的情报有误。',
+                    welcomeBack: '我的网络从不出错。那么，老朋友，你回到这里是为了更新你的档案，还是想窃取当前的报名名单？',
+                    choiceUpdate: '更新我的档案。',
+                    choiceView: '查看报名名单。',
+                    afterView: '情报已经确认过了。那么，要让我把你的新数据写进档案里吗？',
                     nameResponse: (name) => `${name}……我会把这个名字放进我的档案里，和其他……收藏品一起。`,
                     gameId: '你的游戏ID？别担心，这只是档案的一部分……我不会用来做奇怪的事。',
                     gameIdResponse: (id) => `${id}——已记录。你的数字足迹，现在在我的掌控之中了。`,
@@ -436,6 +457,13 @@
                 dialogues: {
                     greet: '你好，猎手！很高兴你决定加入战斗。准备好被侦察了吗？',
                     name: '作为队友，我需要知道你的名字。在战场上，信任从名字开始。',
+                    foundName: (name, id) => `停下，${name}。我的猎头犬认得你的气味。你的ID是 <span class="highlight">${id}</span>，我没说错吧？`,
+                    choiceYes: '没错，好眼力。',
+                    choiceNo: '猎头犬该洗澡了，不是我。',
+                    welcomeBack: '欢迎归队，猎手！你是想用更好的表现重新证明自己，还是想观察一下潜在的盟友和敌人？',
+                    choiceUpdate: '重新评估我的实力！',
+                    choiceView: '查看其它猎手的情报。',
+                    afterView: '知己知彼，百战不殆！现在，准备好更新你的猎手数据了吗？',
                     nameResponse: (name) => `${name}，很好！一个值得被记住的名字。我的箭会为你指引方向！`,
                     gameId: '接下来，告诉我你的游戏ID。每一个猎手都需要被追踪……我是说被认识。',
                     gameIdResponse: (id) => `${id}——侦察完毕！目标已锁定。`,
@@ -454,6 +482,13 @@
                 dialogues: {
                     greet: '嘿嘿，又有新朋友来了！死亡不过是另一场冒险的开始嘛～来来来，报名吧！',
                     name: '先说你叫什么呀～放心，就算你倒下了我也会记住你的名字的！嘻嘻～',
+                    foundName: (name, id) => `咦？等等！${name}？这个名字我记得哦！你的ID是不是 <span class="highlight">${id}</span> 呀？`,
+                    choiceYes: '对呀！',
+                    choiceNo: '不是哦。',
+                    welcomeBack: '嘿嘿，欢迎回来！是觉得之前的数据不够好看想重来一次，还是只想看看大家有多热闹呀？',
+                    choiceUpdate: '我要重新提交数据！',
+                    choiceView: '带我看看大家的数据！',
+                    afterView: '哇哦，大家都很厉害呢！你要不要也重新填一次数据呀？',
                     nameResponse: (name) => `${name}～好可爱的名字！不对，应该说好酷！嘿嘿，以后就叫你${name}啦！`,
                     gameId: '游戏ID告诉我一下嘛～不然我加不了你好友的！',
                     gameIdResponse: (id) => `${id}！记下了记下了～等比赛完我们一起打排位呀！`,
@@ -503,6 +538,15 @@
         function startGame() {
             const startScreen = document.getElementById('startScreen');
             startScreen.classList.add('hidden');
+            
+            // 后台静默预拉取数据用于后续验证
+            if (!window.allPlayersData) {
+                fetch('/.netlify/functions/getScores')
+                    .then(r => r.json())
+                    .then(d => window.allPlayersData = d)
+                    .catch(e => console.warn('后台预取数据失败:', e));
+            }
+
             setTimeout(() => {
                 startScreen.style.display = 'none';
                 document.getElementById('gameContainer').classList.add('active');
@@ -589,10 +633,78 @@
             });
         }
 
-        function submitName() {
+        async function submitName() {
             const input = document.getElementById('nameInput'), error = document.getElementById('nameError'), name = input.value.trim();
             if (!/^[\u4e00-\u9fa5]{2,4}$/.test(name)) { error.textContent = '请输入2-4个中文字符'; input.style.borderColor = '#ff4655'; return; }
-            gameState.playerName = name; setMood('happy'); updateProgress(30); const agent = getCurrentAgent();
+            
+            gameState.playerName = name;
+            document.getElementById('dialogueContent').innerHTML = `<p style="color:rgba(255,255,255,0.4); font-size:13px; text-align:right; margin-top:15px;">📡 正在搜索档案库...</p>`;
+
+            // 如果预加载失败或还没拉完，临时阻塞去拉取
+            if (!window.allPlayersData) {
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                    else window.allPlayersData = [];
+                } catch(e) { window.allPlayersData = []; }
+            }
+
+            const existingPlayer = window.allPlayersData.find(p => p.player_name === name);
+            if (existingPlayer) {
+                stepNameExistsBranch(existingPlayer);
+            } else {
+                continueNormalNameStep(name);
+            }
+        }
+
+        // --- 新增剧情分支逻辑开始 ---
+
+        function stepNameExistsBranch(player) {
+            setMood('thinking'); updateProgress(25); const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.foundName(gameState.playerName, player.game_id)).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick='handleNameYes(${JSON.stringify(player)})'>${agent.dialogues.choiceYes}</button>
+                        <button class="choice-btn" onclick="handleNameNo()">${agent.dialogues.choiceNo}</button>
+                    </div>`;
+            });
+        }
+
+        function handleNameNo() {
+            gameState.gameId = ''; // 清空可能干扰的ID
+            continueNormalNameStep(gameState.playerName);
+        }
+
+        function handleNameYes(player) {
+            gameState.gameId = player.game_id; // 保存已有ID
+            setMood('happy'); updateProgress(40); const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.welcomeBack).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick="stepRank()">${agent.dialogues.choiceUpdate}</button>
+                        <button class="choice-btn" onclick="viewSignupsFromDialogue()">${agent.dialogues.choiceView}</button>
+                    </div>`;
+            });
+        }
+
+        function viewSignupsFromDialogue() {
+            viewSignups(); // 唤起排行卡片
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.afterView).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick="stepRank()">${agent.dialogues.choiceUpdate}</button>
+                    </div>`;
+            });
+        }
+
+        // --- 新增剧情分支逻辑结束 ---
+
+        function continueNormalNameStep(name) {
+            setMood('happy'); updateProgress(30); const agent = getCurrentAgent();
             document.getElementById('dialogueContent').innerHTML = '';
             typeText(document.getElementById('dialogueText'), agent.dialogues.nameResponse(name)).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepGameId()">继 续 ▸</button>`;
@@ -698,7 +810,6 @@
             });
         }
 
-        // 修改1：不再自动提交，而是拉取全服数据用于计算并展示结果页面
         async function submitDataSource() {
             const input = document.getElementById('dataSourceInput'), error = document.getElementById('dataSourceError');
             if (!input.value) { error.textContent = '请选择数据来源赛季'; return; }
@@ -714,18 +825,14 @@
             gameState.hwScore = Math.round(rankScore + (gameState.acs - 200) + (gameState.adr - 130) * 3 + (gameState.kda - 1.4) * 200 + (gameState.kast / 100 - 0.7) * 1000);
 
             // 2. 通过 Netlify Function 获取历史完整数据用于算排名和排行榜
-            window.allPlayersData = []; 
-            let allScores = [];
-            try {
-                const fetchRes = await fetch('/.netlify/functions/getScores');
-                if (fetchRes.ok) {
-                    window.allPlayersData = await fetchRes.json();
-                    allScores = window.allPlayersData.map(p => p.hw_score).filter(s => s != null);
-                }
-            } catch (err) {
-                console.warn('获取历史分数失败，将使用默认分数分组方式', err);
+            if (!window.allPlayersData || window.allPlayersData.length === 0) {
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                } catch (err) { console.warn('获取分数失败', err); }
             }
 
+            let allScores = window.allPlayersData ? window.allPlayersData.map(p => p.hw_score).filter(s => s != null) : [];
             allScores.push(gameState.hwScore);
             allScores.sort((a, b) => b - a);
             const rank = allScores.indexOf(gameState.hwScore) + 1;
@@ -740,7 +847,6 @@
             showConfirmScreen();
         }
 
-        // 新增：展示确认界面和两个选项
         function showConfirmScreen() {
             updateProgress(95); setMood('excited'); const agent = getCurrentAgent();
             document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
@@ -780,7 +886,7 @@
             document.getElementById('customModal').style.display = 'none';
         }
 
-        // 新增：执行实际数据提交
+        // 执行实际数据提交（并更新本地缓存防止排行榜出现重复）
         async function completeSignup() {
             const btn = document.getElementById('btnSubmitSignup');
             if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; }
@@ -799,10 +905,19 @@
                 
                 gameState.isSubmitted = true;
                 if (btn) { btn.textContent = '已 报 名'; }
-                if (window.allPlayersData) { window.allPlayersData.push(payload); } // 将自己加入本地缓存列表
+                
+                // 将自己更新进本地缓存列表。如果已有同名的则替换，否则新增。
+                if (window.allPlayersData) {
+                    const existingIndex = window.allPlayersData.findIndex(p => p.player_name === payload.player_name);
+                    if (existingIndex !== -1) {
+                        window.allPlayersData[existingIndex] = payload;
+                    } else {
+                        window.allPlayersData.push(payload);
+                    }
+                }
 
                 showModal('🎉 报名成功', `
-                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功写入数据库！请等待后续比赛通知。</div>
+                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功记录（如果是重复报名，已覆盖之前的旧数据）！请等待后续比赛通知。</div>
                     <button class="next-btn" onclick="location.reload()" style="width: 100%; text-align: center;">重 新 报 名 其 他 账 号</button>
                 `);
             } catch (err) {
@@ -815,13 +930,14 @@
             }
         }
 
-        // 新增：排行榜弹窗逻辑
+        // 排行榜弹窗逻辑
         function viewSignups() {
             let data = window.allPlayersData || [];
             let displayData = [...data];
             
             // 如果玩家还没提交，就把他作为“当前预览”塞到列表中一起展示
-            if (!gameState.isSubmitted) {
+            if (!gameState.isSubmitted && gameState.hwScore > 0) {
+                displayData = displayData.filter(p => p.player_name !== gameState.playerName);
                 displayData.push({
                     player_name: gameState.playerName + ' <span style="color:#ff4655; font-size:12px;">(当前)</span>',
                     game_id: gameState.gameId,
