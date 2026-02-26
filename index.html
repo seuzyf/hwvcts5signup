@@ -241,16 +241,16 @@
         .kast-input-wrapper .form-input { padding-right: 30px; }
         .kast-suffix { position: absolute; right: 10px; color: rgba(255,255,255,0.4); font-size: 14px; pointer-events: none; }
 
-        /* ================= 弹窗样式 ================= */
+        /* ================= 弹窗样式与排行榜 ================= */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
             display: none; justify-content: center; align-items: center; z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.3s ease; padding: 15px; /* 添加外边距防贴边 */
         }
         .modal-card {
             background: #151520; border: 1px solid rgba(255, 70, 85, 0.4);
-            border-radius: 4px; padding: 25px; width: 90%; max-width: 500px;
+            border-radius: 4px; padding: 25px; width: 100%; max-width: 550px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
         }
         .modal-close {
@@ -263,43 +263,67 @@
             margin-bottom: 20px; letter-spacing: 2px; border-bottom: 1px solid rgba(255,70,85,0.2); padding-bottom: 10px;
         }
         .leaderboard-list {
-            max-height: 50vh; overflow-y: auto; margin-top: 10px;
+            max-height: 55vh; overflow-y: auto; margin-top: 10px; padding-right: 5px;
         }
         .leaderboard-list::-webkit-scrollbar { width: 4px; }
         .leaderboard-list::-webkit-scrollbar-track { background: transparent; }
         .leaderboard-list::-webkit-scrollbar-thumb { background: rgba(255, 70, 85, 0.5); border-radius: 2px; }
+        
+        /* 重新规划网格，增加排名列 */
         .leaderboard-item {
-            display: grid; grid-template-columns: 2fr 1.5fr 1fr;
-            padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: grid; grid-template-columns: 0.6fr 2fr 1.2fr 1fr;
+            padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 14px; align-items: center; border-radius: 2px; margin-bottom: 4px;
         }
         .leaderboard-header { font-weight: 700; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,70,85,0.3); margin-bottom: 5px; }
-        .rank-1 { color: #ffd700; } 
-        .rank-2 { color: #c0c0c0; } 
-        .rank-3 { color: #cd7f32; }
+        
+        /* 分组分割线样式 */
+        .group-divider { text-align: center; margin: 15px 0 5px 0; position: relative; }
+        .group-divider::before {
+            content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+            background: rgba(255,255,255,0.1); z-index: 1;
+        }
+        .group-divider span {
+            position: relative; z-index: 2; padding: 2px 12px; font-size: 12px;
+            font-weight: 700; letter-spacing: 2px; border-radius: 12px;
+        }
+        .legend-divider span { background: #151520; color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+        .middle-divider span { background: #151520; color: #c0c0c0; border: 1px solid rgba(192,192,192,0.3); }
+        .challenger-divider span { background: #151520; color: #cd7f32; border: 1px solid rgba(205,127,50,0.3); }
 
-        /* ================= 手机端适配 ================= */
+        /* ================= 手机端全面适配 ================= */
         @media screen and (max-width: 768px) {
             .main-title { font-size: 42px; letter-spacing: 4px; }
             .sub-title { font-size: 12px; letter-spacing: 2px; }
             .start-btn { padding: 15px 40px; font-size: 16px; }
+            
             .game-container.active { flex-direction: column; }
-            .character-area {
-                position: relative; width: 100%; height: 40%; align-items: flex-end; justify-content: center; flex-shrink: 0;
-            }
+            .character-area { position: relative; width: 100%; height: 35%; align-items: flex-end; justify-content: center; flex-shrink: 0; }
             .character-img { max-height: 95%; max-width: 90%; }
             .character-name-tag { top: 15px; left: 15px; }
             .character-name-tag .agent-name { font-size: 24px; }
-            .character-name-tag .agent-role { font-size: 12px; }
+            .character-name-tag .agent-role { font-size: 12px; margin-top: 2px; }
             .mood-indicator { top: 15px; right: 15px; bottom: auto; left: auto; }
-            .dialogue-area { position: relative; width: 100%; height: 60%; padding: 10px 15px 15px 15px; flex-shrink: 1; }
-            .dialogue-box { padding: 20px 15px; height: 100%; min-height: auto; overflow-y: auto; }
-            .dialogue-text { font-size: 15px; line-height: 1.6; }
+            
+            /* 对话与表单区域适配 */
+            .dialogue-area { position: relative; width: 100%; height: 65%; padding: 10px 15px 15px 15px; flex-shrink: 1; }
+            .dialogue-box { padding: 15px; height: 100%; min-height: auto; overflow-y: auto; }
+            .dialogue-speaker { font-size: 13px; margin-bottom: 12px; padding-bottom: 8px; }
+            .dialogue-text { font-size: 15px; line-height: 1.6; margin-bottom: 10px; }
             .choice-btn { padding: 12px 16px; font-size: 14px; }
-            .form-input { max-width: 100%; }
+            .form-input { max-width: 100%; font-size: 14px; padding: 10px 14px; }
             .stats-grid { grid-template-columns: 1fr; gap: 10px; }
-            .next-btn { margin-top: 15px; align-self: center; width: 100%; text-align: center; }
+            .next-btn { margin-top: 15px; align-self: center; width: 100%; text-align: center; padding: 12px; font-size: 14px; }
             .score-number { font-size: 48px; }
+            
+            /* 弹窗与排行榜移动端适配 */
+            .modal-card { padding: 15px; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 6px; }
+            .modal-title { font-size: 16px; margin-bottom: 15px; }
+            .leaderboard-list { max-height: 60vh; }
+            .leaderboard-item { grid-template-columns: 0.8fr 2.2fr 1.2fr 1fr; padding: 8px 4px; font-size: 12px; }
+            .leaderboard-header { font-size: 11px; }
+            .group-divider span { font-size: 10px; padding: 2px 8px; }
+            
             .divider { display: none; }
             .deco-lines { display: none; }
         }
@@ -657,8 +681,6 @@
             }
         }
 
-        // --- 新增剧情分支逻辑开始 ---
-
         function stepNameExistsBranch(player) {
             setMood('thinking'); updateProgress(25); const agent = getCurrentAgent();
             document.getElementById('dialogueContent').innerHTML = '';
@@ -700,8 +722,6 @@
                     </div>`;
             });
         }
-
-        // --- 新增剧情分支逻辑结束 ---
 
         function continueNormalNameStep(name) {
             setMood('happy'); updateProgress(30); const agent = getCurrentAgent();
@@ -824,7 +844,7 @@
             const rankScore = getRankScore(gameState.rankTier);
             gameState.hwScore = Math.round(rankScore + (gameState.acs - 200) + (gameState.adr - 130) * 3 + (gameState.kda - 1.4) * 200 + (gameState.kast / 100 - 0.7) * 1000);
 
-            // 2. 通过 Netlify Function 获取历史完整数据用于算排名和排行榜
+            // 2. 获取历史完整数据用于算排名和排行榜
             if (!window.allPlayersData || window.allPlayersData.length === 0) {
                 try {
                     const fetchRes = await fetch('/.netlify/functions/getScores');
@@ -836,14 +856,16 @@
             allScores.push(gameState.hwScore);
             allScores.sort((a, b) => b - a);
             const rank = allScores.indexOf(gameState.hwScore) + 1;
+            
+            // 完全按照比例计算预分组：30% / 60%
             const legendCount = Math.ceil(allScores.length * 0.30);
             const middleCount = Math.ceil(allScores.length * 0.60);
 
-            if (rank <= legendCount && gameState.hwScore > 1700) { gameState.preGroup = '传奇组'; } 
-            else if (rank <= middleCount && gameState.hwScore > 1100) { gameState.preGroup = '中间组'; } 
+            if (rank <= legendCount) { gameState.preGroup = '传奇组'; } 
+            else if (rank <= middleCount) { gameState.preGroup = '中间组'; } 
             else { gameState.preGroup = '挑战组'; }
 
-            // 3. 不提交进入确认界面
+            // 3. 进入确认界面
             showConfirmScreen();
         }
 
@@ -886,7 +908,7 @@
             document.getElementById('customModal').style.display = 'none';
         }
 
-        // 执行实际数据提交（并更新本地缓存防止排行榜出现重复）
+        // 提交到数据库
         async function completeSignup() {
             const btn = document.getElementById('btnSubmitSignup');
             if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; }
@@ -906,18 +928,14 @@
                 gameState.isSubmitted = true;
                 if (btn) { btn.textContent = '已 报 名'; }
                 
-                // 将自己更新进本地缓存列表。如果已有同名的则替换，否则新增。
                 if (window.allPlayersData) {
                     const existingIndex = window.allPlayersData.findIndex(p => p.player_name === payload.player_name);
-                    if (existingIndex !== -1) {
-                        window.allPlayersData[existingIndex] = payload;
-                    } else {
-                        window.allPlayersData.push(payload);
-                    }
+                    if (existingIndex !== -1) { window.allPlayersData[existingIndex] = payload; }
+                    else { window.allPlayersData.push(payload); }
                 }
 
                 showModal('🎉 报名成功', `
-                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功记录（如果是重复报名，已覆盖之前的旧数据）！请等待后续比赛通知。</div>
+                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功记录，请加瓦群等待比赛通知， welink群号：590599402（如果是重复报名，已覆盖之前的旧数据）！请等待后续比赛通知。</div>
                     <button class="next-btn" onclick="location.reload()" style="width: 100%; text-align: center;">重 新 报 名 其 他 账 号</button>
                 `);
             } catch (err) {
@@ -930,12 +948,12 @@
             }
         }
 
-        // 排行榜弹窗逻辑
+        // 查看排行榜与分组渲染
         function viewSignups() {
             let data = window.allPlayersData || [];
             let displayData = [...data];
             
-            // 如果玩家还没提交，就把他作为“当前预览”塞到列表中一起展示
+            // 如果玩家还没正式提交且已经算出了分数，就把他作为“当前预览”塞进列表中
             if (!gameState.isSubmitted && gameState.hwScore > 0) {
                 displayData = displayData.filter(p => p.player_name !== gameState.playerName);
                 displayData.push({
@@ -946,35 +964,57 @@
                 });
             }
 
-            // 按照华为分降序排列
+            // 按分数降序排列
             displayData.sort((a, b) => b.hw_score - a.hw_score);
+            
+            const totalPlayers = displayData.length;
+            const top30 = Math.ceil(totalPlayers * 0.30);
+            const top60 = Math.ceil(totalPlayers * 0.60);
 
             let listHtml = `
                 <div class="leaderboard-item leaderboard-header">
-                    <div>姓名 / 游戏ID</div><div style="text-align: center;">位置</div><div style="text-align: right;">华为分</div>
+                    <div style="text-align: center;">排名</div>
+                    <div>姓名 / 游戏ID</div>
+                    <div style="text-align: center;">位置</div>
+                    <div style="text-align: right;">华为分</div>
                 </div>
                 <div class="leaderboard-list">
             `;
             
             displayData.forEach((p, index) => {
-                let rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
+                const currentRank = index + 1;
+
+                // 动态插入分组比例分割线
+                if (currentRank === 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider legend-divider"><span>传奇组 (Top 30%)</span></div>`;
+                } else if (currentRank === top30 + 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider middle-divider"><span>中间组 (30% - 60%)</span></div>`;
+                } else if (currentRank === top60 + 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider challenger-divider"><span>挑战组 (60% - 100%)</span></div>`;
+                }
+
+                // 皇冠和前三名高亮
+                let rankBadge = currentRank === 1 ? '🥇 1' : currentRank === 2 ? '🥈 2' : currentRank === 3 ? '🥉 3' : currentRank;
+                let rankClass = currentRank === 1 ? 'rank-1' : currentRank === 2 ? 'rank-2' : currentRank === 3 ? 'rank-3' : '';
+                
                 let isCurrent = p.player_name.includes('(当前)');
                 let rowStyle = isCurrent ? 'background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);' : '';
                 
                 listHtml += `
                     <div class="leaderboard-item ${rankClass}" style="${rowStyle}">
-                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <div style="font-weight: 900; color: rgba(255,255,255,0.7); text-align: center; font-size: 15px;">${rankBadge}</div>
+                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-left: 5px;">
                             ${p.player_name || '-'}
                             <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top:2px;">${p.game_id || '-'}</div>
                         </div>
                         <div style="text-align: center;">${p.player_role || '-'}</div>
-                        <div style="text-align: right; font-weight: bold; font-size: 16px;">${p.hw_score || 0}</div>
+                        <div style="text-align: right; font-weight: bold; font-size: 16px; color: #ff4655;">${p.hw_score || 0}</div>
                     </div>
                 `;
             });
             listHtml += `</div>`;
 
-            showModal('📊 当前报名情况', listHtml);
+            showModal('📊 报名排行榜分布', listHtml);
         }
     </script>
 </body>
