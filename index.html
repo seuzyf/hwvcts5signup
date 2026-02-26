@@ -141,7 +141,6 @@
             content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #ff4655, transparent);
         }
         
-        /* 增加对话框滚动条样式 */
         .dialogue-box::-webkit-scrollbar { width: 4px; }
         .dialogue-box::-webkit-scrollbar-track { background: transparent; }
         .dialogue-box::-webkit-scrollbar-thumb { background: rgba(255, 70, 85, 0.5); border-radius: 2px; }
@@ -190,22 +189,6 @@
         .stat-item { position: relative; }
         .stat-label-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
         .stat-label-row label { font-size: 13px; color: rgba(255, 255, 255, 0.5); letter-spacing: 1px; margin: 0; }
-        .help-icon {
-            display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
-            border-radius: 50%; background: rgba(255, 70, 85, 0.2); color: #ff4655; font-size: 11px; font-weight: 700;
-            cursor: help; position: relative; flex-shrink: 0;
-        }
-        .help-tooltip {
-            position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-            background: rgba(20, 20, 35, 0.98); border: 1px solid rgba(255, 70, 85, 0.3); border-radius: 4px;
-            padding: 10px 14px; font-size: 12px; color: rgba(255, 255, 255, 0.8); white-space: nowrap;
-            pointer-events: none; opacity: 0; transition: opacity 0.2s ease; z-index: 100; font-weight: 400; line-height: 1.5;
-        }
-        .help-tooltip::after {
-            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-            border: 5px solid transparent; border-top-color: rgba(255, 70, 85, 0.3);
-        }
-        .help-icon:hover .help-tooltip { opacity: 1; }
         .stat-item .form-input { width: 100%; max-width: none; }
 
         /* 确认/下一步按钮 */
@@ -248,11 +231,6 @@
         .deco-line:nth-child(2) { top: 60%; right: -10%; width: 120%; height: 1px; transform: rotate(-15deg); }
         .deco-line:nth-child(3) { top: 80%; right: -10%; width: 120%; height: 1px; transform: rotate(-15deg); }
 
-        /* 提交状态 */
-        .submit-status { margin-top: 15px; padding: 10px 16px; border-radius: 4px; font-size: 14px; display: none; }
-        .submit-status.success { display: block; background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); color: #81c784; }
-        .submit-status.error { display: block; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.3); color: #ff8a80; }
-
         .divider { position: absolute; left: 45%; top: 0; height: 100%; width: 1px; background: linear-gradient(to bottom, transparent, rgba(255, 70, 85, 0.2), transparent); z-index: 15; }
         .mood-indicator { position: absolute; left: 30px; bottom: 30px; z-index: 15; font-size: 12px; color: rgba(255, 255, 255, 0.3); letter-spacing: 1px; }
 
@@ -263,67 +241,65 @@
         .kast-input-wrapper .form-input { padding-right: 30px; }
         .kast-suffix { position: absolute; right: 10px; color: rgba(255,255,255,0.4); font-size: 14px; pointer-events: none; }
 
-        /* ================= 手机端适配 (Media Queries) ================= */
+        /* ================= 弹窗样式 ================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-card {
+            background: #151520; border: 1px solid rgba(255, 70, 85, 0.4);
+            border-radius: 4px; padding: 25px; width: 90%; max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; font-size: 28px;
+            color: rgba(255,255,255,0.5); cursor: pointer; transition: 0.3s; line-height: 1;
+        }
+        .modal-close:hover { color: #ff4655; }
+        .modal-title {
+            font-size: 20px; font-weight: 900; color: #ff4655;
+            margin-bottom: 20px; letter-spacing: 2px; border-bottom: 1px solid rgba(255,70,85,0.2); padding-bottom: 10px;
+        }
+        .leaderboard-list {
+            max-height: 50vh; overflow-y: auto; margin-top: 10px;
+        }
+        .leaderboard-list::-webkit-scrollbar { width: 4px; }
+        .leaderboard-list::-webkit-scrollbar-track { background: transparent; }
+        .leaderboard-list::-webkit-scrollbar-thumb { background: rgba(255, 70, 85, 0.5); border-radius: 2px; }
+        .leaderboard-item {
+            display: grid; grid-template-columns: 2fr 1.5fr 1fr;
+            padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px; align-items: center; border-radius: 2px; margin-bottom: 4px;
+        }
+        .leaderboard-header { font-weight: 700; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,70,85,0.3); margin-bottom: 5px; }
+        .rank-1 { color: #ffd700; } 
+        .rank-2 { color: #c0c0c0; } 
+        .rank-3 { color: #cd7f32; }
+
+        /* ================= 手机端适配 ================= */
         @media screen and (max-width: 768px) {
-            /* 标题界面 */
             .main-title { font-size: 42px; letter-spacing: 4px; }
             .sub-title { font-size: 12px; letter-spacing: 2px; }
             .start-btn { padding: 15px 40px; font-size: 16px; }
-
-            /* 核心布局由左右改为上下 */
             .game-container.active { flex-direction: column; }
-            
             .character-area {
-                position: relative;
-                width: 100%;
-                height: 40%;
-                align-items: flex-end;
-                justify-content: center;
-                flex-shrink: 0;
+                position: relative; width: 100%; height: 40%; align-items: flex-end; justify-content: center; flex-shrink: 0;
             }
-            .character-img {
-                max-height: 95%;
-                max-width: 90%;
-            }
-            .character-name-tag {
-                top: 15px; left: 15px;
-            }
+            .character-img { max-height: 95%; max-width: 90%; }
+            .character-name-tag { top: 15px; left: 15px; }
             .character-name-tag .agent-name { font-size: 24px; }
             .character-name-tag .agent-role { font-size: 12px; }
-            
-            /* 调整情绪指示器位置到右上角 */
-            .mood-indicator {
-                top: 15px; right: 15px; bottom: auto; left: auto;
-            }
-
-            .dialogue-area {
-                position: relative;
-                width: 100%;
-                height: 60%;
-                padding: 10px 15px 15px 15px;
-                flex-shrink: 1;
-            }
-            .dialogue-box {
-                padding: 20px 15px;
-                height: 100%;
-                min-height: auto;
-                overflow-y: auto; /* 允许内部滚动，防止键盘遮挡 */
-            }
+            .mood-indicator { top: 15px; right: 15px; bottom: auto; left: auto; }
+            .dialogue-area { position: relative; width: 100%; height: 60%; padding: 10px 15px 15px 15px; flex-shrink: 1; }
+            .dialogue-box { padding: 20px 15px; height: 100%; min-height: auto; overflow-y: auto; }
             .dialogue-text { font-size: 15px; line-height: 1.6; }
             .choice-btn { padding: 12px 16px; font-size: 14px; }
-            
-            /* 表单元素适配 */
             .form-input { max-width: 100%; }
-            .stats-grid { 
-                grid-template-columns: 1fr; /* 战绩栏改为单列 */
-                gap: 10px; 
-            }
+            .stats-grid { grid-template-columns: 1fr; gap: 10px; }
             .next-btn { margin-top: 15px; align-self: center; width: 100%; text-align: center; }
-            
-            /* 分数展示 */
             .score-number { font-size: 48px; }
-            
-            /* 隐藏不需要的桌面端装饰 */
             .divider { display: none; }
             .deco-lines { display: none; }
         }
@@ -362,6 +338,14 @@
                 <div class="dialogue-text" id="dialogueText"></div>
                 <div id="dialogueContent"></div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <div class="modal-title" id="modalTitle"></div>
+            <div id="modalContent" style="display:flex; flex-direction:column;"></div>
         </div>
     </div>
 
@@ -407,7 +391,7 @@
                     statsResponse: (s) => `ACS ${s.acs}，ADR ${s.adr}... ${getStatsComment_jett(s)}`,
                     dataSource: '这些数据是哪个赛季的？选一个你打得最多的（至少10场排位哦）。',
                     dataSourceResponse: '行，这赛季的数据我认了。',
-                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_jett(score)} 比赛场上见，别让风等太久！祝你好运！🌪️`
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_jett(score)}`
                 }
             },
             duelist2: {
@@ -425,7 +409,7 @@
                     statsResponse: (s) => `这些数字……${getStatsComment_reyna(s)}`,
                     dataSource: '这些数据来自哪个赛季？选场次最多的那个（至少10场）。',
                     dataSourceResponse: '好的，我接受了。不过在比赛中，数据什么都不是，只有胜利才重要。',
-                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_reyna(score)} 猎杀开始了，准备好了吗？💜`
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_reyna(score)}`
                 }
             },
             sentinel: {
@@ -443,7 +427,7 @@
                     statsResponse: (s) => `有趣的数据……${getStatsComment_cypher(s)} 我什么都知道了。`,
                     dataSource: '这些情报来源于哪个赛季？选数据最充分的（至少10场排位）。',
                     dataSourceResponse: '情报已确认。我的摄像头已经看到一切了……',
-                    result: (score) => `你的华为分是 ${score} 分。${getScoreComment_cypher(score)} 我会在暗处看着你的比赛的……祝好运。🎭`
+                    result: (score) => `你的华为分是 ${score} 分。${getScoreComment_cypher(score)}`
                 }
             },
             initiator: {
@@ -461,7 +445,7 @@
                     statsResponse: (s) => `数据已经被我的侦察箭标记了！${getStatsComment_sova(s)}`,
                     dataSource: '这些数据来自哪个赛季？选你出场最多的那个（至少10场排位）。',
                     dataSourceResponse: '已确认！侦察信息完整录入。',
-                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_sova(score)} 战场上见，猎手！我的箭永远不会落空！🏹`
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_sova(score)}`
                 }
             },
             controller: {
@@ -479,7 +463,7 @@
                     statsResponse: (s) => `哇～让我看看……${getStatsComment_clove(s)}`,
                     dataSource: '这些数据是哪个赛季的呀？选你打最多排位的那个哦（至少10场）！',
                     dataSourceResponse: '好的好的，数据收到啦～就算是死了也要好好分析数据呢！',
-                    result: (score) => `叮咚～你的华为分是 ${score} 分！${getScoreComment_clove(score)} 比赛加油哦，就算倒下了我也会复活来给你加油的～💀🌸`
+                    result: (score) => `叮咚～你的华为分是 ${score} 分！${getScoreComment_clove(score)}`
                 }
             }
         };
@@ -675,7 +659,6 @@
                     </div><div class="form-error" id="statsError" style="margin-top:10px;"></div>
                     <button class="next-btn fade-in" onclick="submitStats()" style="margin-top:15px;">确 认 ▸</button>`;
                 
-                // 确保长表单出现时滚动到底部
                 const box = document.getElementById('dialogueBox');
                 if (box) box.scrollTop = box.scrollHeight;
             });
@@ -715,6 +698,7 @@
             });
         }
 
+        // 修改1：不再自动提交，而是拉取全服数据用于计算并展示结果页面
         async function submitDataSource() {
             const input = document.getElementById('dataSourceInput'), error = document.getElementById('dataSourceError');
             if (!input.value) { error.textContent = '请选择数据来源赛季'; return; }
@@ -723,19 +707,20 @@
             
             content.innerHTML = '';
             await typeText(document.getElementById('dialogueText'), getCurrentAgent().dialogues.dataSourceResponse);
-            content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在通过代理计算排名并提交数据...</p>`;
+            content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在计算排名并拉取全服数据...</p>`;
 
             // 1. 提前计算本地分数
             const rankScore = getRankScore(gameState.rankTier);
             gameState.hwScore = Math.round(rankScore + (gameState.acs - 200) + (gameState.adr - 130) * 3 + (gameState.kda - 1.4) * 200 + (gameState.kast / 100 - 0.7) * 1000);
 
-            // 2. 通过 Netlify Function 获取历史分数用于算排名
+            // 2. 通过 Netlify Function 获取历史完整数据用于算排名和排行榜
+            window.allPlayersData = []; 
             let allScores = [];
             try {
                 const fetchRes = await fetch('/.netlify/functions/getScores');
                 if (fetchRes.ok) {
-                    const existingPlayers = await fetchRes.json();
-                    allScores = existingPlayers.map(p => p.hw_score).filter(s => s != null);
+                    window.allPlayersData = await fetchRes.json();
+                    allScores = window.allPlayersData.map(p => p.hw_score).filter(s => s != null);
                 }
             } catch (err) {
                 console.warn('获取历史分数失败，将使用默认分数分组方式', err);
@@ -751,41 +736,55 @@
             else if (rank <= middleCount && gameState.hwScore > 1100) { gameState.preGroup = '中间组'; } 
             else { gameState.preGroup = '挑战组'; }
 
-            // 3. 通过 Netlify Function 提交数据
-            const payload = {
-                player_name: gameState.playerName, game_id: gameState.gameId, player_role: roleMap[gameState.role] || gameState.role,
-                rank_tier: gameState.rankTier, acs: gameState.acs, adr: gameState.adr, kda: gameState.kda, kast: gameState.kast,
-                data_source: gameState.dataSource, hw_score: gameState.hwScore, pre_group: gameState.preGroup
-            };
-
-            try {
-                const res = await fetch('/.netlify/functions/submit', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-                });
-                
-                if (!res.ok) throw new Error('网络请求错误');
-                gameState.isSubmitted = true;
-                content.innerHTML = `
-                    <div class="submit-status success fade-in">✅ 报名数据与分组已成功写入数据库！</div>
-                    <button class="next-btn fade-in" onclick="showResult()" style="margin-top:15px;">查 看 报 名 结 果 ▸</button>`;
-                const box = document.getElementById('dialogueBox');
-                if (box) box.scrollTop = box.scrollHeight;
-            } catch (err) {
-                gameState.isSubmitted = false;
-                content.innerHTML = `
-                    <div class="submit-status error fade-in">❌ 数据提交失败，因网络原因连接服务器超时。</div>
-                    <button class="next-btn fade-in" onclick="submitDataSource()" style="margin-top:15px;">重 试 ▸</button>
-                    <button class="next-btn fade-in" onclick="showResult()" style="margin-top:10px; background: rgba(255,255,255,0.1);">跳 过，查 看 本 地 结 果 ▸</button>`;
-                const box = document.getElementById('dialogueBox');
-                if (box) box.scrollTop = box.scrollHeight;
-            }
+            // 3. 不提交进入确认界面
+            showConfirmScreen();
         }
 
-        async function retrySubmission() {
-            const btn = document.getElementById('retrySubmitBtn'), status = document.getElementById('retryStatusText');
-            btn.disabled = true; btn.textContent = '提 交 中...';
-            status.style.display = 'block'; status.textContent = '正在通过代理服务器尝试提交...'; status.style.color = 'rgba(255,255,255,0.5)';
+        // 新增：展示确认界面和两个选项
+        function showConfirmScreen() {
+            updateProgress(95); setMood('excited'); const agent = getCurrentAgent();
+            document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
+            const content = document.getElementById('dialogueContent'); content.innerHTML = '';
 
+            typeText(document.getElementById('dialogueText'), agent.dialogues.result(gameState.hwScore)).then(() => {
+                content.innerHTML = `
+                    <div class="score-display fade-in">
+                        <div class="score-number">${gameState.hwScore}</div>
+                        <div class="score-label">HUAWEI SCORE // 华 为 分</div>
+                        <div class="group-badge">${gameState.preGroup}</div>
+                    </div>
+                    <div style="font-size:13px; color:rgba(255,255,255,0.3); text-align:center; margin-top:10px; line-height:1.8;">
+                        <p>选手: ${gameState.playerName} | ID: ${gameState.gameId}</p>
+                        <p>位置: ${roleMap[gameState.role] || gameState.role} | 段位: ${gameState.rankTier}</p>
+                        <p>预分组状态: <span style="color:#ff4655; font-weight:bold;">${gameState.preGroup}</span></p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 25px;">
+                        <button class="next-btn fade-in" onclick="completeSignup()" id="btnSubmitSignup" style="flex: 1; padding: 14px 10px; margin-top: 0; align-self: center; text-align: center;">完 成 报 名</button>
+                        <button class="next-btn fade-in" onclick="viewSignups()" style="flex: 1; padding: 14px 10px; margin-top: 0; align-self: center; text-align: center; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);">查 看 报 名 情 况</button>
+                    </div>
+                `;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        // 弹窗控制
+        function showModal(title, contentHtml) {
+            document.getElementById('modalTitle').innerHTML = title;
+            document.getElementById('modalContent').innerHTML = contentHtml;
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+
+        // 新增：执行实际数据提交
+        async function completeSignup() {
+            const btn = document.getElementById('btnSubmitSignup');
+            if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; }
+            
             const payload = {
                 player_name: gameState.playerName, game_id: gameState.gameId, player_role: roleMap[gameState.role] || gameState.role,
                 rank_tier: gameState.rankTier, acs: gameState.acs, adr: gameState.adr, kda: gameState.kda, kast: gameState.kast,
@@ -799,47 +798,67 @@
                 if (!res.ok) throw new Error('提交失败');
                 
                 gameState.isSubmitted = true;
-                status.textContent = '✅ 提交成功！已录入数据库。'; status.style.color = '#81c784'; btn.style.display = 'none';
+                if (btn) { btn.textContent = '已 报 名'; }
+                if (window.allPlayersData) { window.allPlayersData.push(payload); } // 将自己加入本地缓存列表
+
+                showModal('🎉 报名成功', `
+                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功写入数据库！请等待后续比赛通知。</div>
+                    <button class="next-btn" onclick="location.reload()" style="width: 100%; text-align: center;">重 新 报 名 其 他 账 号</button>
+                `);
             } catch (err) {
-                status.textContent = '❌ 提交仍然失败，请检查网络或稍后再试。'; status.style.color = '#ff8a80';
-                btn.disabled = false; btn.textContent = '重 试 提 交 报 名 ▸';
+                gameState.isSubmitted = false;
+                if (btn) { btn.disabled = false; btn.textContent = '完 成 报 名'; }
+                showModal('❌ 报名失败', `
+                    <div style="text-align: center; color: #ff8a80; margin-bottom: 20px; font-size: 15px;">数据提交失败，因网络原因连接服务器超时，请检查后重试。</div>
+                    <button class="next-btn" onclick="closeModal()" style="width: 100%; text-align: center; background: rgba(255,255,255,0.1);">关 闭 并 重 试</button>
+                `);
             }
         }
 
-        function showResult() {
-            updateProgress(100); setMood('excited'); const agent = getCurrentAgent();
-            document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
-            const content = document.getElementById('dialogueContent'); content.innerHTML = '';
+        // 新增：排行榜弹窗逻辑
+        function viewSignups() {
+            let data = window.allPlayersData || [];
+            let displayData = [...data];
+            
+            // 如果玩家还没提交，就把他作为“当前预览”塞到列表中一起展示
+            if (!gameState.isSubmitted) {
+                displayData.push({
+                    player_name: gameState.playerName + ' <span style="color:#ff4655; font-size:12px;">(当前)</span>',
+                    game_id: gameState.gameId,
+                    hw_score: gameState.hwScore,
+                    player_role: roleMap[gameState.role] || gameState.role
+                });
+            }
 
-            typeText(document.getElementById('dialogueText'), agent.dialogues.result(gameState.hwScore)).then(() => {
-                let retryHtml = '';
-                if (!gameState.isSubmitted) {
-                    retryHtml = `
-                        <div style="margin-top:15px; text-align:center; padding: 10px; border: 1px dashed rgba(255,70,85,0.5); border-radius: 4px;">
-                            <p style="color:#ff8a80; font-size:12px; margin-bottom:10px;">⚠ 您的数据尚未成功提交至服务器</p>
-                            <button class="next-btn" id="retrySubmitBtn" onclick="retrySubmission()" style="margin-top:0; width: 100%; background: linear-gradient(135deg, #ff9800, #f57c00);">重 试 提 交 报 名 ▸</button>
-                            <div id="retryStatusText" style="font-size:12px; margin-top:8px; display:none;"></div>
-                        </div>`;
-                }
+            // 按照华为分降序排列
+            displayData.sort((a, b) => b.hw_score - a.hw_score);
 
-                content.innerHTML = `
-                    <div class="score-display fade-in">
-                        <div class="score-number">${gameState.hwScore}</div>
-                        <div class="score-label">HUAWEI SCORE // 华 为 分</div>
-                        <div class="group-badge">${gameState.preGroup}</div>
-                    </div>
-                    <div style="font-size:13px; color:rgba(255,255,255,0.3); text-align:center; margin-top:10px; line-height:1.8;">
-                        <p>选手: ${gameState.playerName} | ID: ${gameState.gameId}</p>
-                        <p>位置: ${roleMap[gameState.role] || gameState.role} | 段位: ${gameState.rankTier}</p>
-                        <p>预分组状态: <span style="color:#ff4655; font-weight:bold;">${gameState.preGroup}</span></p>
-                    </div>
-                    ${retryHtml}
-                    <button class="next-btn fade-in" onclick="location.reload()" style="margin-top:20px; align-self:center; width: 100%; text-align: center;">重 新 报 名 ▸</button>
-                `;
+            let listHtml = `
+                <div class="leaderboard-item leaderboard-header">
+                    <div>姓名 / 游戏ID</div><div style="text-align: center;">位置</div><div style="text-align: right;">华为分</div>
+                </div>
+                <div class="leaderboard-list">
+            `;
+            
+            displayData.forEach((p, index) => {
+                let rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
+                let isCurrent = p.player_name.includes('(当前)');
+                let rowStyle = isCurrent ? 'background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);' : '';
                 
-                const box = document.getElementById('dialogueBox');
-                if (box) box.scrollTop = box.scrollHeight;
+                listHtml += `
+                    <div class="leaderboard-item ${rankClass}" style="${rowStyle}">
+                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            ${p.player_name || '-'}
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top:2px;">${p.game_id || '-'}</div>
+                        </div>
+                        <div style="text-align: center;">${p.player_role || '-'}</div>
+                        <div style="text-align: right; font-weight: bold; font-size: 16px;">${p.hw_score || 0}</div>
+                    </div>
+                `;
             });
+            listHtml += `</div>`;
+
+            showModal('📊 当前报名情况', listHtml);
         }
     </script>
 </body>
