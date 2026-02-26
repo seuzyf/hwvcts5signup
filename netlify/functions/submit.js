@@ -5,7 +5,10 @@ exports.handler = async (event) => {
     
     try {
         const payload = JSON.parse(event.body);
-        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        
+        // 核心修改：优先使用 SERVICE_ROLE_KEY。它具有超级管理员权限，可以安全地在后端绕过 RLS 策略
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+        const supabase = createClient(process.env.SUPABASE_URL, supabaseKey);
         
         // 1. 先查询数据库中是否已经存在该姓名的选手
         const { data: existingData } = await supabase
@@ -16,11 +19,17 @@ exports.handler = async (event) => {
             
         // 2. 更新或插入当前报名玩家的数据
         if (existingData) {
-            const { error } = await supabase
+            // 使用 select() 强制返回更新后的结果，用于拦截静默失败
+            const { data: updatedData, error } = await supabase
                 .from('player_stats')
                 .update(payload)
-                .eq('player_name', payload.player_name);
+                .eq('player_name', payload.player_name)
+                .select();
+                
             if (error) throw error;
+            if (!updatedData || updatedData.length === 0) {
+                throw new Error('更新失败：请确保 Netlify 环境变量中已正确配置 SUPABASE_SERVICE_ROLE_KEY');
+            }
         } else {
             const { error } = await supabase
                 .from('player_stats')
@@ -56,7 +65,7 @@ exports.handler = async (event) => {
                 newGroup = '中间组';
             }
 
-            // 如果该玩家现在应该在的组和数据库里存的不一致，说明由于新人加入导致了名次挤压，需要刷新他
+            // 如果该玩家现在应该在的组和数据库里存的不一致，需要刷新他
             if (player.pre_group !== newGroup) {
                 updatePromises.push(
                     supabase

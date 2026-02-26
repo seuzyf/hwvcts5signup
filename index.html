@@ -71,6 +71,37 @@
             pointer-events: none;
         }
 
+        /* 新增：首页右上角的榜单按钮 */
+        .home-view-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 110;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 70, 85, 0.1);
+            border: 1px solid rgba(255, 70, 85, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+        }
+        .home-view-btn:hover {
+            color: #fff;
+            background: rgba(255, 70, 85, 0.3);
+            border-color: #ff4655;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 70, 85, 0.2);
+        }
+        .home-view-btn svg { width: 16px; height: 16px; }
+
         .title-container { text-align: center; margin-bottom: 60px; padding: 0 20px; }
         .title-badge {
             display: inline-block; padding: 6px 20px; background: rgba(255, 70, 85, 0.15);
@@ -246,7 +277,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
             display: none; justify-content: center; align-items: center; z-index: 1000;
-            animation: fadeIn 0.3s ease; padding: 15px; /* 添加外边距防贴边 */
+            animation: fadeIn 0.3s ease; padding: 15px;
         }
         .modal-card {
             background: #151520; border: 1px solid rgba(255, 70, 85, 0.4);
@@ -269,7 +300,6 @@
         .leaderboard-list::-webkit-scrollbar-track { background: transparent; }
         .leaderboard-list::-webkit-scrollbar-thumb { background: rgba(255, 70, 85, 0.5); border-radius: 2px; }
         
-        /* 重新规划网格，增加排名列 */
         .leaderboard-item {
             display: grid; grid-template-columns: 0.6fr 2fr 1.2fr 1fr;
             padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -305,7 +335,6 @@
             .character-name-tag .agent-role { font-size: 12px; margin-top: 2px; }
             .mood-indicator { top: 15px; right: 15px; bottom: auto; left: auto; }
             
-            /* 对话与表单区域适配 */
             .dialogue-area { position: relative; width: 100%; height: 65%; padding: 10px 15px 15px 15px; flex-shrink: 1; }
             .dialogue-box { padding: 15px; height: 100%; min-height: auto; overflow-y: auto; }
             .dialogue-speaker { font-size: 13px; margin-bottom: 12px; padding-bottom: 8px; }
@@ -316,7 +345,10 @@
             .next-btn { margin-top: 15px; align-self: center; width: 100%; text-align: center; padding: 12px; font-size: 14px; }
             .score-number { font-size: 48px; }
             
-            /* 弹窗与排行榜移动端适配 */
+            /* 数据中心首页按钮适配 */
+            .home-view-btn { top: 20px; right: 20px; padding: 6px 12px; font-size: 12px; }
+            .home-view-btn svg { width: 14px; height: 14px; }
+
             .modal-card { padding: 15px; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 6px; }
             .modal-title { font-size: 16px; margin-bottom: 15px; }
             .leaderboard-list { max-height: 60vh; }
@@ -333,6 +365,13 @@
     <div class="particles" id="particles"></div>
 
     <div class="start-screen" id="startScreen">
+        <button class="home-view-btn" onclick="viewSignups()" id="topViewBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20v-6M6 20V10M18 20V4"/>
+            </svg>
+            查 看 榜 单
+        </button>
+        
         <div class="title-container">
             <div class="title-badge">VALORANT TOURNAMENT</div>
             <h1 class="main-title">HWVCTS5</h1>
@@ -563,7 +602,6 @@
             const startScreen = document.getElementById('startScreen');
             startScreen.classList.add('hidden');
             
-            // 后台静默预拉取数据用于后续验证
             if (!window.allPlayersData) {
                 fetch('/.netlify/functions/getScores')
                     .then(r => r.json())
@@ -664,7 +702,6 @@
             gameState.playerName = name;
             document.getElementById('dialogueContent').innerHTML = `<p style="color:rgba(255,255,255,0.4); font-size:13px; text-align:right; margin-top:15px;">📡 正在搜索档案库...</p>`;
 
-            // 如果预加载失败或还没拉完，临时阻塞去拉取
             if (!window.allPlayersData) {
                 try {
                     const fetchRes = await fetch('/.netlify/functions/getScores');
@@ -694,12 +731,12 @@
         }
 
         function handleNameNo() {
-            gameState.gameId = ''; // 清空可能干扰的ID
+            gameState.gameId = '';
             continueNormalNameStep(gameState.playerName);
         }
 
         function handleNameYes(player) {
-            gameState.gameId = player.game_id; // 保存已有ID
+            gameState.gameId = player.game_id;
             setMood('happy'); updateProgress(40); const agent = getCurrentAgent();
             document.getElementById('dialogueContent').innerHTML = '';
             typeText(document.getElementById('dialogueText'), agent.dialogues.welcomeBack).then(() => {
@@ -712,7 +749,7 @@
         }
 
         function viewSignupsFromDialogue() {
-            viewSignups(); // 唤起排行卡片
+            viewSignups();
             const agent = getCurrentAgent();
             document.getElementById('dialogueContent').innerHTML = '';
             typeText(document.getElementById('dialogueText'), agent.dialogues.afterView).then(() => {
@@ -840,11 +877,9 @@
             await typeText(document.getElementById('dialogueText'), getCurrentAgent().dialogues.dataSourceResponse);
             content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在计算排名并拉取全服数据...</p>`;
 
-            // 1. 提前计算本地分数
             const rankScore = getRankScore(gameState.rankTier);
             gameState.hwScore = Math.round(rankScore + (gameState.acs - 200) + (gameState.adr - 130) * 3 + (gameState.kda - 1.4) * 200 + (gameState.kast / 100 - 0.7) * 1000);
 
-            // 2. 获取历史完整数据用于算排名和排行榜
             if (!window.allPlayersData || window.allPlayersData.length === 0) {
                 try {
                     const fetchRes = await fetch('/.netlify/functions/getScores');
@@ -857,7 +892,6 @@
             allScores.sort((a, b) => b - a);
             const rank = allScores.indexOf(gameState.hwScore) + 1;
             
-            // 完全按照比例计算预分组：30% / 60%
             const legendCount = Math.ceil(allScores.length * 0.30);
             const middleCount = Math.ceil(allScores.length * 0.60);
 
@@ -865,7 +899,6 @@
             else if (rank <= middleCount) { gameState.preGroup = '中间组'; } 
             else { gameState.preGroup = '挑战组'; }
 
-            // 3. 进入确认界面
             showConfirmScreen();
         }
 
@@ -897,7 +930,6 @@
             });
         }
 
-        // 弹窗控制
         function showModal(title, contentHtml) {
             document.getElementById('modalTitle').innerHTML = title;
             document.getElementById('modalContent').innerHTML = contentHtml;
@@ -908,7 +940,6 @@
             document.getElementById('customModal').style.display = 'none';
         }
 
-        // 提交到数据库
         async function completeSignup() {
             const btn = document.getElementById('btnSubmitSignup');
             if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; }
@@ -948,12 +979,21 @@
             }
         }
 
-        // 查看排行榜与分组渲染
-        function viewSignups() {
+        async function viewSignups() {
+            if (!window.allPlayersData || window.allPlayersData.length === 0) {
+                const btn = document.getElementById('topViewBtn');
+                let originalText = btn ? btn.innerHTML : '';
+                if (btn) btn.innerHTML = '拉取中...';
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                } catch (e) { console.warn('获取分数失败', e); }
+                if (btn) btn.innerHTML = originalText;
+            }
+
             let data = window.allPlayersData || [];
             let displayData = [...data];
             
-            // 如果玩家还没正式提交且已经算出了分数，就把他作为“当前预览”塞进列表中
             if (!gameState.isSubmitted && gameState.hwScore > 0) {
                 displayData = displayData.filter(p => p.player_name !== gameState.playerName);
                 displayData.push({
@@ -964,7 +1004,6 @@
                 });
             }
 
-            // 按分数降序排列
             displayData.sort((a, b) => b.hw_score - a.hw_score);
             
             const totalPlayers = displayData.length;
@@ -984,7 +1023,6 @@
             displayData.forEach((p, index) => {
                 const currentRank = index + 1;
 
-                // 动态插入分组比例分割线
                 if (currentRank === 1 && totalPlayers > 0) {
                     listHtml += `<div class="group-divider legend-divider"><span>传奇组 (Top 30%)</span></div>`;
                 } else if (currentRank === top30 + 1 && totalPlayers > 0) {
@@ -993,11 +1031,10 @@
                     listHtml += `<div class="group-divider challenger-divider"><span>挑战组 (60% - 100%)</span></div>`;
                 }
 
-                // 皇冠和前三名高亮
                 let rankBadge = currentRank === 1 ? '🥇 1' : currentRank === 2 ? '🥈 2' : currentRank === 3 ? '🥉 3' : currentRank;
                 let rankClass = currentRank === 1 ? 'rank-1' : currentRank === 2 ? 'rank-2' : currentRank === 3 ? 'rank-3' : '';
                 
-                let isCurrent = p.player_name.includes('(当前)');
+                let isCurrent = p.player_name && p.player_name.includes('(当前)');
                 let rowStyle = isCurrent ? 'background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);' : '';
                 
                 listHtml += `
