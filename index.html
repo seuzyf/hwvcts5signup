@@ -457,8 +457,8 @@
                     gameIdResponse: (id) => `${id}，记住了。下次排位见到你可别跑！`,
                     rank: '你的段位是多少？给我看看你的实力够不够上桌。',
                     rankResponse: (rank) => `${rank}？${getRankComment_jett(rank)}`,
-                    stats: '来，把你的战绩数据亮出来！ACS、ADR、KDA、KAST，我全都要看。',
-                    statsResponse: (s) => `ACS ${s.acs}，ADR ${s.adr}... ${getStatsComment_jett(s)}`,
+                    stats: '来，把你的战绩数据亮出来！ACS、回合伤害（ADR）、KDA、KAST，我全都要看。',
+                    statsResponse: (s) => `ACS ${s.acs}，回合伤害（ADR） ${s.adr}... ${getStatsComment_jett(s)}`,
                     dataSource: '这些数据是哪个赛季的？选一个你打得最多的（至少10场排位哦）。',
                     dataSourceResponse: '行，这赛季的数据我认了。',
                     result: (score) => `你的华为分是 ${score} 分！${getScoreComment_jett(score)}`
@@ -482,7 +482,7 @@
                     gameIdResponse: (id) => `${id}？有点意思。希望你在比赛里也这么自信。`,
                     rank: '段位？让我看看你的灵魂够不够强大。',
                     rankResponse: (rank) => `${rank}？${getRankComment_reyna(rank)}`,
-                    stats: '把你的战绩给我看看……ACS、ADR、KDA、KAST，一个都不能少。',
+                    stats: '把你的战绩给我看看……ACS、回合伤害（ADR）、KDA、KAST，一个都不能少。',
                     statsResponse: (s) => `这些数字……${getStatsComment_reyna(s)}`,
                     dataSource: '这些数据来自哪个赛季？选场次最多的那个（至少10场）。',
                     dataSourceResponse: '好的，我接受了。不过在比赛中，数据什么都不是，只有胜利才重要。',
@@ -507,7 +507,7 @@
                     gameIdResponse: (id) => `${id}——已记录。你的数字足迹，现在在我的掌控之中了。`,
                     rank: '你的段位？让我评估一下你的……价值。',
                     rankResponse: (rank) => `${rank}。${getRankComment_cypher(rank)}`,
-                    stats: '现在，我需要更多数据。ACS、ADR、KDA、KAST——情报是战争的第一步。',
+                    stats: '现在，我需要更多数据。ACS、回合伤害（ADR）、KDA、KAST——情报是战争的第一步。',
                     statsResponse: (s) => `有趣的数据……${getStatsComment_cypher(s)} 我什么都知道了。`,
                     dataSource: '这些情报来源于哪个赛季？选数据最充分的（至少10场排位）。',
                     dataSourceResponse: '情报已确认。我的摄像头已经看到一切了……',
@@ -532,7 +532,7 @@
                     gameIdResponse: (id) => `${id}——侦察完毕！目标已锁定。`,
                     rank: '你的段位是多少？让我的猎头犬替你嗅探一下实力。',
                     rankResponse: (rank) => `${rank}！${getRankComment_sova(rank)}`,
-                    stats: '现在我需要你的精确数据——ACS、ADR、KDA和KAST。精准如同我的箭。',
+                    stats: '现在我需要你的精确数据——ACS、回合伤害（ADR）、KDA和KAST。精准如同我的箭。',
                     statsResponse: (s) => `数据已经被我的侦察箭标记了！${getStatsComment_sova(s)}`,
                     dataSource: '这些数据来自哪个赛季？选你出场最多的那个（至少10场排位）。',
                     dataSourceResponse: '已确认！侦察信息完整录入。',
@@ -557,7 +557,7 @@
                     gameIdResponse: (id) => `${id}！记下了记下了～等比赛完我们一起打排位呀！`,
                     rank: '你现在什么段位呀？不管高低我都不会嫌弃你的啦～',
                     rankResponse: (rank) => `${rank}！${getRankComment_clove(rank)}`,
-                    stats: '来来来，把你的数据给我看看～ACS、ADR、KDA、KAST，别害羞嘛！',
+                    stats: '来来来，把你的数据给我看看～ACS、回合伤害（ADR）、KDA、KAST，别害羞嘛！',
                     statsResponse: (s) => `哇～让我看看……${getStatsComment_clove(s)}`,
                     dataSource: '这些数据是哪个赛季的呀？选你打最多排位的那个哦（至少10场）！',
                     dataSourceResponse: '好的好的，数据收到啦～就算是死了也要好好分析数据呢！',
@@ -820,7 +820,7 @@
                 document.getElementById('dialogueContent').innerHTML = `
                     <div class="stats-grid fade-in">
                         <div class="stat-item"><div class="stat-label-row"><label>ACS</label></div><input type="number" class="form-input" id="acsInput" placeholder="例如: 230"></div>
-                        <div class="stat-item"><div class="stat-label-row"><label>ADR</label></div><input type="number" class="form-input" id="adrInput" placeholder="例如: 150"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>回合伤害（ADR）</label></div><input type="number" class="form-input" id="adrInput" placeholder="例如: 150"></div>
                         <div class="stat-item"><div class="stat-label-row"><label>KDA</label></div><input type="number" step="0.01" class="form-input" id="kdaInput" placeholder="例如: 1.5"></div>
                         <div class="stat-item"><div class="stat-label-row"><label>KAST</label></div>
                             <div class="kast-input-wrapper"><input type="number" class="form-input" id="kastInput" placeholder="例如: 72"><span class="kast-suffix">%</span></div>
@@ -839,7 +839,7 @@
             const error = document.getElementById('statsError');
 
             if (!/^\d{2,3}$/.test(acsVal)) { error.textContent = 'ACS应为2-3位数字'; return; }
-            if (!/^\d{2,3}$/.test(adrVal)) { error.textContent = 'ADR应为2-3位数字'; return; }
+            if (!/^\d{2,3}$/.test(adrVal)) { error.textContent = '回合伤害（ADR）应为2-3位数字'; return; }
             const kdaNum = parseFloat(kdaVal);
             if (isNaN(kdaNum) || kdaNum < 0 || kdaNum > 3 || !/^\d(\.\d{1,2})?$/.test(kdaVal)) { error.textContent = 'KDA应为0-3之间，最多2位小数'; return; }
             if (!/^\d{2}$/.test(kastVal)) { error.textContent = 'KAST应为两位数字'; return; }
@@ -878,7 +878,57 @@
             content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在计算排名并拉取全服数据...</p>`;
 
             const rankScore = getRankScore(gameState.rankTier);
-            gameState.hwScore = Math.round(rankScore + (gameState.acs - 200) + (gameState.adr - 130) * 3 + (gameState.kda - 1.4) * 200 + (gameState.kast / 100 - 0.7) * 1000);
+            
+            // =========================================================================
+            // 华为分 核心数据分计算 (上限 ±600分，采用反正切 Arctan S型衰减算法)
+            // =========================================================================
+            // 算法公式: 权重极限分 * (2 / π) * arctan((玩家数据 - 基准线) / 标准差)
+            // 公式特性: 达到 1个标准差(SD) 即可拿到 50% 的分数，后续得分难度陡增，且永远不会突破权重上限。
+            //
+            // [基准线与标准差定义]
+            // ACS  : 基准 200, 标准差 50
+            // ADR  : 基准 130, 标准差 30
+            // KDA  : 基准 1.4, 标准差 0.5
+            // KAST : 基准 70,  标准差 10
+            // =========================================================================
+            
+            // 各个位置的权重分配表 (四个属性相加必须等于 600)
+            const roleWeights = {
+                // 🗡️ 一突 (Duelist 1) - 极致破点：依然最看重伤害，生存要求相对降低
+                'duelist1':   { acs: 180, adr: 180, kda: 120, kast: 120 },
+                
+                // ⚔️ 二突 (Duelist 2) - 补枪收割：六边形战士，四项数据平分秋色
+                'duelist2':   { acs: 150, adr: 150, kda: 150, kast: 150 },
+                
+                // 🏹 先锋 (Initiator) - 信息助攻：偏向助攻和参团(KAST)
+                'initiator':  { acs: 120, adr: 120, kda: 150, kast: 210 },
+                
+                // 🌫️ 烟位 (Controller) - 团队核心：活着最重要，对伤害要求极低，极其看重参团和KDA
+                'controller': { acs: 90,  adr: 90,  kda: 180, kast: 240 },
+                
+                // 🛡️ 哨位 (Sentinel) - 阵地防守：残局/兜底位，对换血比(KDA)有极其严苛的要求
+                'sentinel':   { acs: 120, adr: 90,  kda: 210, kast: 180 }
+            };
+
+            // 获取当前所选位置的权重，如果没有匹配（防御性兜底）则默认给一突
+            const weight = roleWeights[gameState.role] || roleWeights['duelist1'];
+
+            // 计算反正切单项得分的工具函数
+            const getArctanScore = (val, base, sd, maxWeight) => {
+                return maxWeight * (2 / Math.PI) * Math.atan((val - base) / sd);
+            };
+
+            // 分别计算四项数据分的叠加
+            const dataScore = 
+                getArctanScore(gameState.acs, 200, 50, weight.acs) +
+                getArctanScore(gameState.adr, 130, 30, weight.adr) +
+                getArctanScore(gameState.kda, 1.4, 0.5, weight.kda) +
+                getArctanScore(gameState.kast, 70, 10, weight.kast);
+
+            // 最终华为分 = 段位基础分 + 数据表现分
+            gameState.hwScore = Math.round(rankScore + dataScore);
+
+            // =========================================================================
 
             if (!window.allPlayersData || window.allPlayersData.length === 0) {
                 try {
