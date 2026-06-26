@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HWVCTS5 无畏契约比赛报名</title>
+    <title>HWVCTS6 无畏契约比赛报名</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 
@@ -193,6 +193,7 @@
             font-family: 'Noto Sans SC', sans-serif; text-align: left; position: relative; overflow: hidden;
         }
         .choice-btn:hover { background: rgba(255, 70, 85, 0.2); border-color: #ff4655; color: #fff; transform: translateX(5px); }
+        .choice-btn.selected-role { background: rgba(255, 70, 85, 0.2); border-color: #ff4655; color: #fff; transform: translateX(5px); }
         .choice-btn::before { content: '▸'; margin-right: 10px; color: #ff4655; }
 
         /* 表单输入 */
@@ -374,8 +375,8 @@
         
         <div class="title-container">
             <div class="title-badge">VALORANT TOURNAMENT</div>
-            <h1 class="main-title">HWVCTS5</h1>
-            <p class="sub-title">华 为 无 畏 契 约 锦 标 赛 · 第 五 赛 季</p>
+            <h1 class="main-title">HWVCTS6</h1>
+            <p class="sub-title">华 为 无 畏 契 约 锦 标 赛 · 第 六 赛 季</p>
         </div>
         <button class="start-btn" onclick="startGame()">开 始 报 名</button>
     </div>
@@ -429,7 +430,7 @@
         createParticles();
 
         let gameState = {
-            role: '', agentKey: '', playerName: '', gameId: '', rankTier: '',
+            roles: [], role: '', agentKey: '', playerName: '', gameId: '', rankTier: '',
             acs: 0, adr: 0, kda: 0, kast: 0, dataSource: '', hwScore: 0, preGroup: '',
             isSubmitted: false, step: 0
         };
@@ -459,8 +460,6 @@
                     rankResponse: (rank) => `${rank}？${getRankComment_jett(rank)}`,
                     stats: '来，把你的战绩数据亮出来！ACS、回合伤害（ADR）、KDA、KAST，我全都要看。',
                     statsResponse: (s) => `ACS ${s.acs}，回合伤害（ADR） ${s.adr}... ${getStatsComment_jett(s)}`,
-                    dataSource: '这些数据是哪个赛季的？选一个你打得最多的（至少10场排位哦）。',
-                    dataSourceResponse: '行，这赛季的数据我认了。',
                     result: (score) => `你的华为分是 ${score} 分！${getScoreComment_jett(score)}`
                 }
             },
@@ -484,8 +483,6 @@
                     rankResponse: (rank) => `${rank}？${getRankComment_reyna(rank)}`,
                     stats: '把你的战绩给我看看……ACS、回合伤害（ADR）、KDA、KAST，一个都不能少。',
                     statsResponse: (s) => `这些数字……${getStatsComment_reyna(s)}`,
-                    dataSource: '这些数据来自哪个赛季？选场次最多的那个（至少10场）。',
-                    dataSourceResponse: '好的，我接受了。不过在比赛中，数据什么都不是，只有胜利才重要。',
                     result: (score) => `你的华为分是 ${score} 分！${getScoreComment_reyna(score)}`
                 }
             },
@@ -509,8 +506,6 @@
                     rankResponse: (rank) => `${rank}。${getRankComment_cypher(rank)}`,
                     stats: '现在，我需要更多数据。ACS、回合伤害（ADR）、KDA、KAST——情报是战争的第一步。',
                     statsResponse: (s) => `有趣的数据……${getStatsComment_cypher(s)} 我什么都知道了。`,
-                    dataSource: '这些情报来源于哪个赛季？选数据最充分的（至少10场排位）。',
-                    dataSourceResponse: '情报已确认。我的摄像头已经看到一切了……',
                     result: (score) => `你的华为分是 ${score} 分。${getScoreComment_cypher(score)}`
                 }
             },
@@ -534,8 +529,6 @@
                     rankResponse: (rank) => `${rank}！${getRankComment_sova(rank)}`,
                     stats: '现在我需要你的精确数据——ACS、回合伤害（ADR）、KDA和KAST。精准如同我的箭。',
                     statsResponse: (s) => `数据已经被我的侦察箭标记了！${getStatsComment_sova(s)}`,
-                    dataSource: '这些数据来自哪个赛季？选你出场最多的那个（至少10场排位）。',
-                    dataSourceResponse: '已确认！侦察信息完整录入。',
                     result: (score) => `你的华为分是 ${score} 分！${getScoreComment_sova(score)}`
                 }
             },
@@ -559,8 +552,6 @@
                     rankResponse: (rank) => `${rank}！${getRankComment_clove(rank)}`,
                     stats: '来来来，把你的数据给我看看～ACS、回合伤害（ADR）、KDA、KAST，别害羞嘛！',
                     statsResponse: (s) => `哇～让我看看……${getStatsComment_clove(s)}`,
-                    dataSource: '这些数据是哪个赛季的呀？选你打最多排位的那个哦（至少10场）！',
-                    dataSourceResponse: '好的好的，数据收到啦～就算是死了也要好好分析数据呢！',
                     result: (score) => `叮咚～你的华为分是 ${score} 分！${getScoreComment_clove(score)}`
                 }
             }
@@ -660,23 +651,65 @@
         function showRoleSelection() {
             updateProgress(5); setMood('normal');
             document.getElementById('dialogueSpeaker').textContent = 'SYSTEM // 系统';
-            typeText(document.getElementById('dialogueText'), '欢迎来到 <span class="highlight">HWVCTS5</span> 无畏契约锦标赛！请选择你的<span class="highlight">主玩位置</span>，这将决定谁来引导你完成报名。').then(() => {
+            typeText(document.getElementById('dialogueText'), '欢迎来到 <span class="highlight">HWVCTS6</span> 无畏契约锦标赛！请选择你的<span class="highlight">位置（可多选）</span>。<br><span style="font-size:14px; color:#ff8a80;">提示：你勾选的第一个位置将被视为你的【主玩位置】，随后将进入该位置的引导分支。</span>').then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
-                    <div class="choices-container fade-in">
-                        <button class="choice-btn" onclick="selectRole('duelist1')">一突 — 打出致命一击</button>
-                        <button class="choice-btn" onclick="selectRole('duelist2')">二突 — 收割灵魂</button>
-                        <button class="choice-btn" onclick="selectRole('sentinel')">哨位 — 守卫后方</button>
-                        <button class="choice-btn" onclick="selectRole('initiator')">先锋 — 侦察先行</button>
-                        <button class="choice-btn" onclick="selectRole('controller')">烟位 — 掌控战场</button>
-                    </div>`;
+                    <div class="choices-container fade-in" id="roleContainer">
+                        <button class="choice-btn role-btn" data-role="duelist1" onclick="toggleRoleBtn(this, 'duelist1')">一突 — 打出致命一击</button>
+                        <button class="choice-btn role-btn" data-role="duelist2" onclick="toggleRoleBtn(this, 'duelist2')">二突 — 收割灵魂</button>
+                        <button class="choice-btn role-btn" data-role="sentinel" onclick="toggleRoleBtn(this, 'sentinel')">哨位 — 守卫后方</button>
+                        <button class="choice-btn role-btn" data-role="initiator" onclick="toggleRoleBtn(this, 'initiator')">先锋 — 侦察先行</button>
+                        <button class="choice-btn role-btn" data-role="controller" onclick="toggleRoleBtn(this, 'controller')">烟位 — 掌控战场</button>
+                    </div>
+                    <button class="next-btn fade-in" id="confirmRoleBtn" onclick="confirmRoles()" disabled style="margin-top:15px; opacity:0.5;">下 一 步 ▸</button>
+                `;
                 const box = document.getElementById('dialogueBox');
                 if (box) box.scrollTop = box.scrollHeight;
             });
         }
 
-        function selectRole(role) {
-            gameState.role = role; gameState.agentKey = role; setCharacter(role, 'happy'); updateProgress(10);
-            const agent = getCurrentAgent(); document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
+        let selectedRoles = [];
+        function toggleRoleBtn(btn, roleKey) {
+            if (selectedRoles.includes(roleKey)) {
+                selectedRoles = selectedRoles.filter(r => r !== roleKey);
+                btn.classList.remove('selected-role');
+            } else {
+                selectedRoles.push(roleKey);
+                btn.classList.add('selected-role');
+            }
+            updateRoleButtons();
+        }
+
+        function updateRoleButtons() {
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                const roleKey = btn.getAttribute('data-role');
+                const idx = selectedRoles.indexOf(roleKey);
+                // 移除原有的徽章
+                btn.innerHTML = btn.innerHTML.replace(/<span class="role-badge".*?<\/span>/g, '');
+                if (idx > -1) {
+                    const badgeText = idx === 0 ? '主玩' : `次选`;
+                    const badgeColor = idx === 0 ? '#ff4655' : 'rgba(255,255,255,0.7)';
+                    btn.innerHTML += `<span class="role-badge" style="float:right; color:${badgeColor}; font-size:13px; font-weight:bold;">[${badgeText}]</span>`;
+                }
+            });
+            const nextBtn = document.getElementById('confirmRoleBtn');
+            if (selectedRoles.length > 0) {
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function confirmRoles() {
+            gameState.roles = selectedRoles;
+            gameState.role = selectedRoles[0]; // 确定主分支
+            gameState.agentKey = selectedRoles[0];
+            setCharacter(gameState.role, 'happy');
+            updateProgress(10);
+            
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
             document.getElementById('dialogueContent').innerHTML = '';
             typeText(document.getElementById('dialogueText'), agent.dialogues.greet).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepName()">继 续 ▸</button>`;
@@ -818,6 +851,9 @@
             document.getElementById('dialogueContent').innerHTML = '';
             typeText(document.getElementById('dialogueText'), agent.dialogues.stats).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
+                    <div style="background: rgba(255, 70, 85, 0.1); border-left: 3px solid #ff4655; padding: 10px; color: #ff8a80; font-size: 13px; font-weight: bold; margin-bottom: 15px; border-radius: 2px;">
+                        ⚠ 请确保填写的是本赛季排位场次大于等于10场后的数据。
+                    </div>
                     <div class="stats-grid fade-in">
                         <div class="stat-item"><div class="stat-label-row"><label>ACS</label></div><input type="number" class="form-input" id="acsInput" placeholder="例如: 230"></div>
                         <div class="stat-item"><div class="stat-label-row"><label>回合伤害（ADR）</label></div><input type="number" class="form-input" id="adrInput" placeholder="例如: 150"></div>
@@ -847,34 +883,33 @@
             gameState.acs = parseInt(acsVal); gameState.adr = parseInt(adrVal); gameState.kda = parseFloat(kdaVal); gameState.kast = parseInt(kastVal);
             setMood('thinking'); updateProgress(75); const agent = getCurrentAgent();
             document.getElementById('dialogueContent').innerHTML = '';
+            
             typeText(document.getElementById('dialogueText'), agent.dialogues.statsResponse({ acs: gameState.acs, adr: gameState.adr, kda: gameState.kda, kast: gameState.kast })).then(() => {
-                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepDataSource()">继 续 ▸</button>`;
+                // 不再跳转选择赛季，而是跳转至问卷提交环节
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepQuestionnaire()">继 续 ▸</button>`;
             });
         }
 
-        function stepDataSource() {
-            updateProgress(80); setMood('serious'); const agent = getCurrentAgent();
-            const sources = ['V25 第一幕', 'V25 第二幕', 'V25 第三幕', 'V25 第四幕', 'V25 第五幕', 'V25 第六幕', 'V26 第一幕'];
-            let options = sources.map(s => `<option value="${s}">${s}</option>`).join('');
+        function stepQuestionnaire() {
+            updateProgress(80); setMood('serious');
             document.getElementById('dialogueContent').innerHTML = '';
-            typeText(document.getElementById('dialogueText'), agent.dialogues.dataSource).then(() => {
+            const msg = '数据记录完毕！最后一步，请点击下方链接前往问卷上传你的战绩截图。完成截图上传后，点击确认即可计算你的华为分。';
+            typeText(document.getElementById('dialogueText'), msg).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
-                    <div class="form-group fade-in">
-                        <label>数据来源赛季（请选择场次 ≥ 10 场的赛季）</label>
-                        <select class="form-input" id="dataSourceInput"><option value="">-- 请选择赛季 --</option>${options}</select>
-                        <div class="form-error" id="dataSourceError"></div>
-                    </div><button class="next-btn fade-in" onclick="submitDataSource()">确 认 ▸</button>`;
+                    <div class="form-group fade-in" style="margin: 20px 0; text-align: center;">
+                        <a href="https://wj.qq.com/s2/27148065/f51c/" target="_blank" style="color:#ff4655; text-decoration:none; font-size:16px; font-weight:bold; border-bottom: 1px solid #ff4655; padding-bottom: 2px;">🔗 请点击链接问卷上传战绩信息</a>
+                    </div>
+                    <button class="next-btn fade-in" onclick="submitQuestionnaire()">我 已 提 交 问 卷 ▸</button>`;
             });
         }
 
-        async function submitDataSource() {
-            const input = document.getElementById('dataSourceInput'), error = document.getElementById('dataSourceError');
-            if (!input.value) { error.textContent = '请选择数据来源赛季'; return; }
-            gameState.dataSource = input.value; setMood('happy'); updateProgress(88);
+        async function submitQuestionnaire() {
+            gameState.dataSource = 'S6问卷收集';
+            setMood('happy'); updateProgress(88);
             const content = document.getElementById('dialogueContent');
             
             content.innerHTML = '';
-            await typeText(document.getElementById('dialogueText'), getCurrentAgent().dialogues.dataSourceResponse);
+            await typeText(document.getElementById('dialogueText'), '好的！确认你已经上传截图了。正在为你计算华为分排名...');
             content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在计算排名并拉取全服数据...</p>`;
 
             const rankScore = getRankScore(gameState.rankTier);
@@ -882,50 +917,27 @@
             // =========================================================================
             // 华为分 核心数据分计算 (上限 ±600分，采用反正切 Arctan S型衰减算法)
             // =========================================================================
-            // 算法公式: 权重极限分 * (2 / π) * arctan((玩家数据 - 基准线) / 标准差)
-            // 公式特性: 达到 1个标准差(SD) 即可拿到 50% 的分数，后续得分难度陡增，且永远不会突破权重上限。
-            //
-            // [基准线与标准差定义]
-            // ACS  : 基准 200, 标准差 50
-            // ADR  : 基准 130, 标准差 30
-            // KDA  : 基准 1.4, 标准差 0.5
-            // KAST : 基准 70,  标准差 10
-            // =========================================================================
             
-            // 各个位置的权重分配表 (四个属性相加必须等于 600)
             const roleWeights = {
-                // 🗡️ 一突 (Duelist 1) - 极致破点：依然最看重伤害，生存要求相对降低
                 'duelist1':   { acs: 180, adr: 180, kda: 120, kast: 120 },
-                
-                // ⚔️ 二突 (Duelist 2) - 补枪收割：六边形战士，四项数据平分秋色
                 'duelist2':   { acs: 150, adr: 150, kda: 150, kast: 150 },
-                
-                // 🏹 先锋 (Initiator) - 信息助攻：偏向助攻和参团(KAST)
                 'initiator':  { acs: 120, adr: 120, kda: 150, kast: 210 },
-                
-                // 🌫️ 烟位 (Controller) - 团队核心：活着最重要，对伤害要求极低，极其看重参团和KDA
                 'controller': { acs: 90,  adr: 90,  kda: 180, kast: 240 },
-                
-                // 🛡️ 哨位 (Sentinel) - 阵地防守：残局/兜底位，对换血比(KDA)有极其严苛的要求
                 'sentinel':   { acs: 120, adr: 90,  kda: 210, kast: 180 }
             };
 
-            // 获取当前所选位置的权重，如果没有匹配（防御性兜底）则默认给一突
             const weight = roleWeights[gameState.role] || roleWeights['duelist1'];
 
-            // 计算反正切单项得分的工具函数
             const getArctanScore = (val, base, sd, maxWeight) => {
                 return maxWeight * (2 / Math.PI) * Math.atan((val - base) / sd);
             };
 
-            // 分别计算四项数据分的叠加
             const dataScore = 
                 getArctanScore(gameState.acs, 200, 50, weight.acs) +
                 getArctanScore(gameState.adr, 130, 30, weight.adr) +
                 getArctanScore(gameState.kda, 1.4, 0.5, weight.kda) +
                 getArctanScore(gameState.kast, 70, 10, weight.kast);
 
-            // 最终华为分 = 段位基础分 + 数据表现分
             gameState.hwScore = Math.round(rankScore + dataScore);
 
             // =========================================================================
@@ -958,6 +970,7 @@
             const content = document.getElementById('dialogueContent'); content.innerHTML = '';
 
             typeText(document.getElementById('dialogueText'), agent.dialogues.result(gameState.hwScore)).then(() => {
+                const joinedRoles = gameState.roles.map(r => roleMap[r]).join(' / ');
                 content.innerHTML = `
                     <div class="score-display fade-in">
                         <div class="score-number">${gameState.hwScore}</div>
@@ -966,7 +979,7 @@
                     </div>
                     <div style="font-size:13px; color:rgba(255,255,255,0.3); text-align:center; margin-top:10px; line-height:1.8;">
                         <p>选手: ${gameState.playerName} | ID: ${gameState.gameId}</p>
-                        <p>位置: ${roleMap[gameState.role] || gameState.role} | 段位: ${gameState.rankTier}</p>
+                        <p>位置: ${joinedRoles} | 段位: ${gameState.rankTier}</p>
                         <p>预分组状态: <span style="color:#ff4655; font-weight:bold;">${gameState.preGroup}</span></p>
                     </div>
                     
@@ -994,8 +1007,10 @@
             const btn = document.getElementById('btnSubmitSignup');
             if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; }
             
+            const joinedRoles = gameState.roles.map(r => roleMap[r]).join(' / ');
+
             const payload = {
-                player_name: gameState.playerName, game_id: gameState.gameId, player_role: roleMap[gameState.role] || gameState.role,
+                player_name: gameState.playerName, game_id: gameState.gameId, player_role: joinedRoles,
                 rank_tier: gameState.rankTier, acs: gameState.acs, adr: gameState.adr, kda: gameState.kda, kast: gameState.kast,
                 data_source: gameState.dataSource, hw_score: gameState.hwScore, pre_group: gameState.preGroup
             };
@@ -1050,7 +1065,7 @@
                     player_name: gameState.playerName + ' <span style="color:#ff4655; font-size:12px;">(当前)</span>',
                     game_id: gameState.gameId,
                     hw_score: gameState.hwScore,
-                    player_role: roleMap[gameState.role] || gameState.role
+                    player_role: gameState.roles.map(r => roleMap[r]).join(' / ')
                 });
             }
 
@@ -1094,7 +1109,7 @@
                             ${p.player_name || '-'}
                             <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top:2px;">${p.game_id || '-'}</div>
                         </div>
-                        <div style="text-align: center;">${p.player_role || '-'}</div>
+                        <div style="text-align: center; font-size: 11px;">${p.player_role || '-'}</div>
                         <div style="text-align: right; font-weight: bold; font-size: 16px; color: #ff4655;">${p.hw_score || 0}</div>
                     </div>
                 `;
