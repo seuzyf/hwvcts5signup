@@ -54,8 +54,10 @@ function getArctanScore(val, base, sd, maxWeight) {
 // 计算单个玩家的华为分
 function calculateHwScore(player) {
     const rankScore = getRankScore(player.rank_tier);
-    const role = player.player_role || '一突';
-    const weight = CONFIG.roleWeights[role] || CONFIG.roleWeights['一突'];
+    
+    // 适配多选位置逻辑，取玩家选择的第一项作为主玩位置计算权重
+    const mainRole = (player.player_role || '一突').split(' / ')[0].trim();
+    const weight = CONFIG.roleWeights[mainRole] || CONFIG.roleWeights['一突'];
 
     // 确保从数据库取出的字段转为浮点数计算
     const acs = parseFloat(player.acs || 0);
@@ -85,9 +87,9 @@ exports.handler = async (event) => {
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
         const supabase = createClient(process.env.SUPABASE_URL, supabaseKey);
         
-        // 1. 查询数据库中是否已经存在该姓名的选手
+        // 1. 查询数据库中是否已经存在该姓名的选手 (更改为 s6_player_stats 表)
         const { data: existingData } = await supabase
-            .from('player_stats')
+            .from('s6_player_stats')
             .select('player_name')
             .eq('player_name', payload.player_name)
             .maybeSingle();
@@ -95,7 +97,7 @@ exports.handler = async (event) => {
         // 2. 更新或插入当前报名玩家的最新原始数据
         if (existingData) {
             const { data: updatedData, error } = await supabase
-                .from('player_stats')
+                .from('s6_player_stats')
                 .update(payload)
                 .eq('player_name', payload.player_name)
                 .select();
@@ -106,14 +108,14 @@ exports.handler = async (event) => {
             }
         } else {
             const { error } = await supabase
-                .from('player_stats')
+                .from('s6_player_stats')
                 .insert([payload]);
             if (error) throw error;
         }
         
         // 3. 拉取全服所有玩家的原始战绩数据，准备执行全局刷新
         const { data: allPlayers, error: fetchError } = await supabase
-            .from('player_stats')
+            .from('s6_player_stats')
             .select('*');
             
         if (fetchError) throw fetchError;
@@ -147,7 +149,7 @@ exports.handler = async (event) => {
             if (player.hw_score !== player.new_hw_score || player.pre_group !== newGroup) {
                 updatePromises.push(
                     supabase
-                        .from('player_stats')
+                        .from('s6_player_stats')
                         .update({ 
                             hw_score: player.new_hw_score, 
                             pre_group: newGroup 
