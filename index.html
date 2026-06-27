@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>HWVCTS6 无畏契约比赛报名</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 
@@ -23,4 +29,1914 @@
         }
 
         /* 粒子背景 */
-        .particlesNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 70, 85, 0.6);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* 开始界面 */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 50%, #0a0a1f 100%);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        /* 首页右上角的榜单按钮 */
+        .home-view-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 110;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 70, 85, 0.1);
+            border: 1px solid rgba(255, 70, 85, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+        }
+        .home-view-btn:hover {
+            color: #fff;
+            background: rgba(255, 70, 85, 0.3);
+            border-color: #ff4655;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 70, 85, 0.2);
+        }
+        .home-view-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .title-container {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+        .title-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            background: rgba(255, 70, 85, 0.15);
+            border: 1px solid rgba(255, 70, 85, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            color: #ff4655;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .main-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #ff4655, #ff8a80, #ff4655);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 70, 85, 0.3));
+            margin-bottom: 15px;
+        }
+        .sub-title {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 5px;
+            font-weight: 300;
+        }
+
+        .start-btn {
+            padding: 18px 60px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4655, #cc2233);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 100%, 15px 100%);
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 70, 85, 0.4);
+        }
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 主游戏界面 */
+        .game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 50;
+        }
+        .game-container.active {
+            display: flex;
+        }
+        .game-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0d0d15 0%, #151520 50%, #0d0d15 100%);
+            z-index: 0;
+        }
+        .game-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 70, 85, 0.05) 0%, transparent 70%);
+        }
+
+        /* 角色立绘区域 */
+        .character-area {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 45%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        .character-img {
+            max-height: 85%;
+            max-width: 80%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(255, 70, 85, 0.2));
+            transition: all 0.5s ease;
+            animation: characterFloat 3s ease-in-out infinite;
+        }
+        @keyframes characterFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .character-name-tag {
+            position: absolute;
+            left: 30px;
+            top: 30px;
+            z-index: 15;
+        }
+        .character-name-tag .agent-name {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ff4655, #ff8a80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .character-name-tag .agent-role {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        /* 对话区域 */
+        .dialogue-area {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 50px;
+        }
+        .dialogue-box {
+            background: rgba(15, 15, 25, 0.9);
+            border: 1px solid rgba(255, 70, 85, 0.2);
+            border-radius: 4px;
+            padding: 40px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .dialogue-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff4655, transparent);
+        }
+
+        .dialogue-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .dialogue-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .dialogue-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 70, 85, 0.5);
+            border-radius: 2px;
+        }
+
+        .dialogue-speaker {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff4655;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 70, 85, 0.15);
+            flex-shrink: 0;
+        }
+        .dialogue-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+        .dialogue-text .highlight {
+            color: #ff4655;
+            font-weight: 500;
+        }
+
+        #dialogueContent {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 选项按钮 */
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .choice-btn {
+            padding: 14px 24px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 70, 85, 0.08);
+            border: 1px solid rgba(255, 70, 85, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans SC', sans-serif;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .choice-btn:hover {
+            background: rgba(255, 70, 85, 0.2);
+            border-color: #ff4655;
+            color: #fff;
+            transform: translateX(5px);
+        }
+        .choice-btn.selected-role {
+            background: rgba(255, 70, 85, 0.2);
+            border-color: #ff4655;
+            color: #fff;
+            transform: translateX(5px);
+        }
+        .choice-btn::before {
+            content: '▸';
+            margin-right: 10px;
+            color: #ff4655;
+        }
+
+        /* 表单输入 */
+        .form-group {
+            margin-top: 10px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .form-input {
+            width: 100%;
+            max-width: 350px;
+            padding: 12px 16px;
+            font-size: 15px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 70, 85, 0.25);
+            border-radius: 2px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .form-input:focus {
+            border-color: #ff4655;
+            background: rgba(255, 70, 85, 0.08);
+            box-shadow: 0 0 15px rgba(255, 70, 85, 0.1);
+        }
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        select.form-input {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ff4655' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+            cursor: pointer;
+        }
+        select.form-input option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .form-error {
+            color: #ff4655;
+            font-size: 12px;
+            margin-top: 6px;
+            min-height: 18px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .form-error::before {
+            content: '⚠';
+        }
+        .form-error:empty::before {
+            content: '';
+        }
+
+        /* 统计数据表单 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .stat-item {
+            position: relative;
+        }
+        .stat-label-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .stat-label-row label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .stat-item .form-input {
+            width: 100%;
+            max-width: none;
+        }
+
+        /* 确认/下一步按钮 */
+        .next-btn {
+            margin-top: auto;
+            padding: 12px 36px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff4655, #cc2233);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans SC', sans-serif;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
+            align-self: flex-end;
+        }
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 70, 85, 0.3);
+        }
+        .next-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ================= 动态波纹引导效果（修复后） ================= */
+        .submit-ripple-btn {
+            position: relative;
+            z-index: 1;
+            /* 移除原有的clip-path，让波纹扩散不受裁剪 */
+            clip-path: none !important;
+            overflow: visible !important;
+            border-radius: 4px;
+        }
+        .submit-ripple-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 70, 85, 0.7);
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+            animation: rippleOut 1.5s ease-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .submit-ripple-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 70, 85, 0.4);
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+            animation: rippleOut 1.5s ease-out 0.5s infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        @keyframes rippleOut {
+            0% {
+                width: 100%;
+                height: 100%;
+                opacity: 0.9;
+                border-width: 3px;
+            }
+            100% {
+                width: 150%;
+                height: 160%;
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+        /* 波纹按钮脉冲光晕 */
+        @keyframes btnGlowPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 8px 2px rgba(255, 70, 85, 0.3), 0 0 20px 4px rgba(255, 70, 85, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 18px 6px rgba(255, 70, 85, 0.6), 0 0 35px 10px rgba(255, 70, 85, 0.25);
+            }
+        }
+        .submit-ripple-btn {
+            animation: btnGlowPulse 1.5s ease-in-out infinite;
+        }
+
+        /* 结果界面的分数 */
+        .score-display {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .score-number {
+            font-size: 64px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff4655, #ffd700, #ff4655);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: scoreGlow 2s ease-in-out infinite;
+        }
+        .group-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 18px;
+            background: rgba(255, 70, 85, 0.15);
+            border: 1px solid rgba(255, 70, 85, 0.5);
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(255, 70, 85, 0.2);
+        }
+        @keyframes scoreGlow {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .score-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 3px;
+            margin-top: 5px;
+        }
+
+        /* 段位不够提示区域 */
+        .rank-reject-box {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 70, 85, 0.08);
+            border: 1px solid rgba(255, 70, 85, 0.3);
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .rank-reject-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .rank-reject-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+        .rank-reject-text .highlight-rank {
+            color: #ff4655;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .rank-reject-min {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 12px;
+            font-size: 13px;
+            color: #ffd700;
+            letter-spacing: 1px;
+        }
+
+        /* 打字效果 */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #ff4655;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 30;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4655, #ff8a80);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
+        }
+
+        /* 装饰线条 */
+        .deco-lines {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .deco-line {
+            position: absolute;
+            background: rgba(255, 70, 85, 0.05);
+        }
+        .deco-line:nth-child(1) {
+            top: 20%;
+            right: -10%;
+            width: 120%;
+            height: 1px;
+            transform: rotate(-15deg);
+        }
+        .deco-line:nth-child(2) {
+            top: 60%;
+            right: -10%;
+            width: 120%;
+            height: 1px;
+            transform: rotate(-15deg);
+        }
+        .deco-line:nth-child(3) {
+            top: 80%;
+            right: -10%;
+            width: 120%;
+            height: 1px;
+            transform: rotate(-15deg);
+        }
+
+        .divider {
+            position: absolute;
+            left: 45%;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 70, 85, 0.2), transparent);
+            z-index: 15;
+        }
+        .mood-indicator {
+            position: absolute;
+            left: 30px;
+            bottom: 30px;
+            z-index: 15;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .kast-input-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
+        }
+        .kast-input-wrapper .form-input {
+            padding-right: 30px;
+        }
+        .kast-suffix {
+            position: absolute;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* ================= 弹窗样式与排行榜 ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            padding: 15px;
+        }
+        .modal-card {
+            background: #151520;
+            border: 1px solid rgba(255, 70, 85, 0.4);
+            border-radius: 4px;
+            padding: 25px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #ff4655;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ff4655;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(255, 70, 85, 0.2);
+            padding-bottom: 10px;
+        }
+        .leaderboard-list {
+            max-height: 55vh;
+            overflow-y: auto;
+            margin-top: 10px;
+            padding-right: 5px;
+        }
+        .leaderboard-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .leaderboard-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .leaderboard-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 70, 85, 0.5);
+            border-radius: 2px;
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 0.6fr 2fr 1.2fr 1fr;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            align-items: center;
+            border-radius: 2px;
+            margin-bottom: 4px;
+        }
+        .leaderboard-header {
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 70, 85, 0.3);
+            margin-bottom: 5px;
+        }
+
+        /* 分组分割线样式 */
+        .group-divider {
+            text-align: center;
+            margin: 15px 0 5px 0;
+            position: relative;
+        }
+        .group-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .group-divider span {
+            position: relative;
+            z-index: 2;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 12px;
+        }
+        .legend-divider span {
+            background: #151520;
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .middle-divider span {
+            background: #151520;
+            color: #c0c0c0;
+            border: 1px solid rgba(192, 192, 192, 0.3);
+        }
+        .challenger-divider span {
+            background: #151520;
+            color: #cd7f32;
+            border: 1px solid rgba(205, 127, 50, 0.3);
+        }
+
+        /* ================= 手机端全面适配 ================= */
+        @media screen and (max-width: 768px) {
+            .main-title {
+                font-size: 42px;
+                letter-spacing: 4px;
+            }
+            .sub-title {
+                font-size: 12px;
+                letter-spacing: 2px;
+            }
+            .start-btn {
+                padding: 15px 40px;
+                font-size: 16px;
+            }
+
+            .game-container.active {
+                flex-direction: column;
+            }
+            .character-area {
+                position: relative;
+                width: 100%;
+                height: 35%;
+                align-items: flex-end;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .character-img {
+                max-height: 95%;
+                max-width: 90%;
+            }
+            .character-name-tag {
+                top: 15px;
+                left: 15px;
+            }
+            .character-name-tag .agent-name {
+                font-size: 24px;
+            }
+            .character-name-tag .agent-role {
+                font-size: 12px;
+                margin-top: 2px;
+            }
+            .mood-indicator {
+                top: 15px;
+                right: 15px;
+                bottom: auto;
+                left: auto;
+            }
+
+            .dialogue-area {
+                position: relative;
+                width: 100%;
+                height: 65%;
+                padding: 10px 15px 15px 15px;
+                flex-shrink: 1;
+            }
+            .dialogue-box {
+                padding: 15px;
+                height: 100%;
+                min-height: auto;
+                overflow-y: auto;
+            }
+            .dialogue-speaker {
+                font-size: 13px;
+                margin-bottom: 12px;
+                padding-bottom: 8px;
+            }
+            .dialogue-text {
+                font-size: 15px;
+                line-height: 1.6;
+                margin-bottom: 10px;
+            }
+            .choice-btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            .form-input {
+                max-width: 100%;
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .next-btn {
+                margin-top: 15px;
+                align-self: center;
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+                font-size: 14px;
+            }
+            .score-number {
+                font-size: 48px;
+            }
+
+            /* 移动端波纹效果适配 */
+            .submit-ripple-btn::after {
+                animation: rippleOutMobile 1.5s ease-out infinite;
+            }
+            .submit-ripple-btn::before {
+                animation: rippleOutMobile 1.5s ease-out 0.5s infinite;
+            }
+            @keyframes rippleOutMobile {
+                0% {
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.8;
+                    border-width: 2px;
+                }
+                100% {
+                    width: 130%;
+                    height: 140%;
+                    opacity: 0;
+                    border-width: 1px;
+                }
+            }
+
+            /* 数据中心首页按钮适配 */
+            .home-view-btn {
+                top: 20px;
+                right: 20px;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .home-view-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .modal-card {
+                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                border-radius: 6px;
+            }
+            .modal-title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            .leaderboard-list {
+                max-height: 60vh;
+            }
+            .leaderboard-item {
+                grid-template-columns: 0.8fr 2.2fr 1.2fr 1fr;
+                padding: 8px 4px;
+                font-size: 12px;
+            }
+            .leaderboard-header {
+                font-size: 11px;
+            }
+            .group-divider span {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+
+            .divider {
+                display: none;
+            }
+            .deco-lines {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="start-screen" id="startScreen">
+        <button class="home-view-btn" onclick="viewSignups()" id="topViewBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20v-6M6 20V10M18 20V4"/>
+            </svg>
+            查 看 榜 单
+        </button>
+
+        <div class="title-container">
+            <div class="title-badge">VALORANT TOURNAMENT</div>
+            <h1 class="main-title">HWVCTS6</h1>
+            <p class="sub-title">华 为 无 畏 契 约 锦 标 赛 · 第 六 赛 季</p>
+        </div>
+        <button class="start-btn" onclick="startGame()">开 始 报 名</button>
+    </div>
+
+    <div class="game-container" id="gameContainer">
+        <div class="game-bg"></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+        <div class="deco-lines">
+            <div class="deco-line"></div><div class="deco-line"></div><div class="deco-line"></div>
+        </div>
+        <div class="character-area" id="characterArea">
+            <div class="character-name-tag" id="characterNameTag" style="display:none;">
+                <div class="agent-name" id="agentName"></div>
+                <div class="agent-role" id="agentRole"></div>
+            </div>
+            <img class="character-img" id="characterImg" src="" alt="" style="display:none;">
+            <div class="mood-indicator" id="moodIndicator"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="dialogue-area" id="dialogueArea">
+            <div class="dialogue-box" id="dialogueBox">
+                <div class="dialogue-speaker" id="dialogueSpeaker"></div>
+                <div class="dialogue-text" id="dialogueText"></div>
+                <div id="dialogueContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <div class="modal-title" id="modalTitle"></div>
+            <div id="modalContent" style="display:flex; flex-direction:column;"></div>
+        </div>
+    </div>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 8 + 4) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        let gameState = {
+            roles: [],
+            role: '',
+            agentKey: '',
+            playerName: '',
+            gameId: '',
+            rankTier: '',
+            acs: 0,
+            adr: 0,
+            kda: 0,
+            kast: 0,
+            dataSource: '',
+            hwScore: 0,
+            preGroup: '',
+            isSubmitted: false,
+            step: 0
+        };
+
+        const roleMap = {
+            'duelist1': '一突',
+            'duelist2': '二突',
+            'sentinel': '哨位',
+            'initiator': '先锋',
+            'controller': '烟位'
+        };
+
+        const agents = {
+            duelist1: {
+                name: 'JETT',
+                nameCN: '捷风',
+                role: '决斗者 // DUELIST',
+                fullImg: 'https://storage.moegirl.org.cn/moegirl/commons/f/f5/VALORANT_Jett.png',
+                dialogues: {
+                    greet: '哟！又有新人要来参加比赛了？速度跟上，别拖后腿！',
+                    name: '先报上名来吧——你叫什么？战场上可不兴匿名作战。',
+                    foundName: (name, id) => `等等，${name}... 看着眼熟啊。你的ID是不是 <span class="highlight">${id}</span>？`,
+                    choiceYes: '是我！',
+                    choiceNo: '认错人了吧？',
+                    welcomeBack: '哈，我就知道！怎么，是不是觉得自己变强了，想来刷新一下数据？还是单纯想看看现在的排行榜？',
+                    choiceUpdate: '我要更新战绩！',
+                    choiceView: '随便看看报名情况。',
+                    afterView: '看完了没？要是觉得别人分数太高，随时可以更新你的数据！',
+                    nameResponse: (name) => `${name}？还行，这名字听起来挺利索的。跟我的风一样快！`,
+                    gameId: '你的游戏ID是什么？我得确认下你不是来打酱油的。',
+                    gameIdResponse: (id) => `${id}，记住了。下次排位见到你可别跑！`,
+                    rank: '你的段位是多少？给我看看你的实力够不够上桌。',
+                    rankResponse: (rank) => `${rank}？${getRankComment_jett(rank)}`,
+                    rankTooLow: (rank) => `哈？才<span class="highlight-rank">${rank}</span>？这可不行啊！黄金以下的选手还不能参赛哦。去练练再来吧，我在赛场上等你！`,
+                    stats: '来，把你的战绩数据亮出来！ACS、回合伤害（ADR）、KDA、KAST，我全都要看。',
+                    statsResponse: (s) => `ACS ${s.acs}，回合伤害（ADR） ${s.adr}... ${getStatsComment_jett(s)}`,
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_jett(score)}`
+                }
+            },
+            duelist2: {
+                name: 'REYNA',
+                nameCN: '蕾娜',
+                role: '决斗者 // DUELIST',
+                fullImg: 'https://storage.moegirl.org.cn/moegirl/commons/4/46/VALORANT_Reyna.png',
+                dialogues: {
+                    greet: '又一个送上门的猎物？呵，让我看看你够不够资格站在我身边。',
+                    name: '告诉我你的名字，让我记住……下一个被我碾压的人叫什么。',
+                    foundName: (name, id) => `慢着……${name}。你的灵魂气息我品尝过。你的ID，是 <span class="highlight">${id}</span> 对吧？`,
+                    choiceYes: '没错。',
+                    choiceNo: '你可能记错了。',
+                    welcomeBack: '我就知道……那些被我记住的灵魂总会回来。说吧，是想奉上更美味的战绩，还是想审视你的猎物们？',
+                    choiceUpdate: '我要更新战绩。',
+                    choiceView: '我想看报名列表。',
+                    afterView: '猎物的挣扎总是如此有趣……准备好刷新你的战绩了吗？',
+                    nameResponse: (name) => `${name}……嗯，这个名字，我会记在心里的。别让我失望。`,
+                    gameId: '你的游戏ID呢？我想看看你在战场上的模样。',
+                    gameIdResponse: (id) => `${id}？有点意思。希望你在比赛里也这么自信。`,
+                    rank: '段位？让我看看你的灵魂够不够强大。',
+                    rankResponse: (rank) => `${rank}？${getRankComment_reyna(rank)}`,
+                    rankTooLow: (rank) => `<span class="highlight-rank">${rank}</span>？呵……你的灵魂还不够强大。黄金以下的猎物，连站在我面前的资格都没有。去吞噬更多灵魂再来吧。`,
+                    stats: '把你的战绩给我看看……ACS、回合伤害（ADR）、KDA、KAST，一个都不能少。',
+                    statsResponse: (s) => `这些数字……${getStatsComment_reyna(s)}`,
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_reyna(score)}`
+                }
+            },
+            sentinel: {
+                name: 'CYPHER',
+                nameCN: '零',
+                role: '哨兵 // SENTINEL',
+                fullImg: 'https://storage.moegirl.org.cn/moegirl/commons/f/f8/VALORANT_Cypher.png',
+                dialogues: {
+                    greet: '嘘……有人来了。别紧张，我的线已经布好了。来，坐下聊聊。',
+                    name: '每个人都有秘密，但我至少需要知道你的名字。放心，不会告诉别人。',
+                    foundName: (name, id) => `嘘……${name}。我的情报网里有这个名字。让我查查……你的ID是 <span class="highlight">${id}</span>，对吗？`,
+                    choiceYes: '是的，情报很准。',
+                    choiceNo: '不，你的情报有误。',
+                    welcomeBack: '我的网络从不出错。那么，老朋友，你回到这里是为了更新你的档案，还是想窃取当前的报名名单？',
+                    choiceUpdate: '更新我的档案。',
+                    choiceView: '查看报名名单。',
+                    afterView: '情报已经确认过了。那么，要让我把你的新数据写进档案里吗？',
+                    nameResponse: (name) => `${name}……我会把这个名字放进我的档案里，和其他……收藏品一起。`,
+                    gameId: '你的游戏ID？别担心，这只是档案的一部分……我不会用来做奇怪的事。',
+                    gameIdResponse: (id) => `${id}——已记录。你的数字足迹，现在在我的掌控之中了。`,
+                    rank: '你的段位？让我评估一下你的……价值。',
+                    rankResponse: (rank) => `${rank}。${getRankComment_cypher(rank)}`,
+                    rankTooLow: (rank) => `我的情报显示……<span class="highlight-rank">${rank}</span>。很遗憾，黄金以下的选手暂时无法报名。但我可以等你成长——我的摄像头会一直看着你的。`,
+                    stats: '现在，我需要更多数据。ACS、回合伤害（ADR）、KDA、KAST——情报是战争的第一步。',
+                    statsResponse: (s) => `有趣的数据……${getStatsComment_cypher(s)} 我什么都知道了。`,
+                    result: (score) => `你的华为分是 ${score} 分。${getScoreComment_cypher(score)}`
+                }
+            },
+            initiator: {
+                name: 'SOVA',
+                nameCN: '猎枭',
+                role: '先锋 // INITIATOR',
+                fullImg: 'https://storage.moegirl.org.cn/moegirl/commons/c/c7/VALORANT_Sova.png',
+                dialogues: {
+                    greet: '你好，猎手！很高兴你决定加入战斗。准备好被侦察了吗？',
+                    name: '作为队友，我需要知道你的名字。在战场上，信任从名字开始。',
+                    foundName: (name, id) => `停下，${name}。我的猎头犬认得你的气味。你的ID是 <span class="highlight">${id}</span>，我没说错吧？`,
+                    choiceYes: '没错，好眼力。',
+                    choiceNo: '猎头犬该洗澡了，不是我。',
+                    welcomeBack: '欢迎归队，猎手！你是想用更好的表现重新证明自己，还是想观察一下潜在的盟友和敌人？',
+                    choiceUpdate: '重新评估我的实力！',
+                    choiceView: '查看其它猎手的情报。',
+                    afterView: '知己知彼，百战不殆！现在，准备好更新你的猎手数据了吗？',
+                    nameResponse: (name) => `${name}，很好！一个值得被记住的名字。我的箭会为你指引方向！`,
+                    gameId: '接下来，告诉我你的游戏ID。每一个猎手都需要被追踪……我是说被认识。',
+                    gameIdResponse: (id) => `${id}——侦察完毕！目标已锁定。`,
+                    rank: '你的段位是多少？让我的猎头犬替你嗅探一下实力。',
+                    rankResponse: (rank) => `${rank}！${getRankComment_sova(rank)}`,
+                    rankTooLow: (rank) => `<span class="highlight-rank">${rank}</span>……猎手，你的箭还不够锋利。黄金以下的选手还不能参赛。继续训练吧，我期待你变强的那一天！`,
+                    stats: '现在我需要你的精确数据——ACS、回合伤害（ADR）、KDA和KAST。精准如同我的箭。',
+                    statsResponse: (s) => `数据已经被我的侦察箭标记了！${getStatsComment_sova(s)}`,
+                    result: (score) => `你的华为分是 ${score} 分！${getScoreComment_sova(score)}`
+                }
+            },
+            controller: {
+                name: 'CLOVE',
+                nameCN: '暮蝶',
+                role: '控场者 // CONTROLLER',
+                fullImg: 'https://storage.moegirl.org.cn/moegirl/commons/2/2b/VALORANT_Clove.png',
+                dialogues: {
+                    greet: '嘿嘿，又有新朋友来了！死亡不过是另一场冒险的开始嘛～来来来，报名吧！',
+                    name: '先说你叫什么呀～放心，就算你倒下了我也会记住你的名字的！嘻嘻～',
+                    foundName: (name, id) => `咦？等等！${name}？这个名字我记得哦！你的ID是不是 <span class="highlight">${id}</span> 呀？`,
+                    choiceYes: '对呀！',
+                    choiceNo: '不是哦。',
+                    welcomeBack: '嘿嘿，欢迎回来！是觉得之前的数据不够好看想重来一次，还是只想看看大家有多热闹呀？',
+                    choiceUpdate: '我要重新提交数据！',
+                    choiceView: '带我看看大家的数据！',
+                    afterView: '哇哦，大家都很厉害呢！你要不要也重新填一次数据呀？',
+                    nameResponse: (name) => `${name}～好可爱的名字！不对，应该说好酷！嘿嘿，以后就叫你${name}啦！`,
+                    gameId: '游戏ID告诉我一下嘛～不然我加不了你好友的！',
+                    gameIdResponse: (id) => `${id}！记下了记下了～等比赛完我们一起打排位呀！`,
+                    rank: '你现在什么段位呀？不管高低我都不会嫌弃你的啦～',
+                    rankResponse: (rank) => `${rank}！${getRankComment_clove(rank)}`,
+                    rankTooLow: (rank) => `哎呀，<span class="highlight-rank">${rank}</span>啊……虽然我很想让你报名，但规则是黄金以下不能参赛呢。快去提升段位吧，我等你回来哦～别死太多次啦！`,
+                    stats: '来来来，把你的数据给我看看～ACS、回合伤害（ADR）、KDA、KAST，别害羞嘛！',
+                    statsResponse: (s) => `哇～让我看看……${getStatsComment_clove(s)}`,
+                    result: (score) => `叮咚～你的华为分是 ${score} 分！${getScoreComment_clove(score)}`
+                }
+            }
+        };
+
+        const rankTiers = [];
+        const rankNames = ['黑铁', '青铜', '白银', '黄金', '白金', '钻石', '超凡', '神话'];
+        rankNames.forEach(name => { for (let i = 1; i <= 3; i++) rankTiers.push(`${name}${i}`); });
+        rankTiers.push('辐能');
+
+        // 黄金1在rankTiers中的索引为9（黑铁1-3:0-2, 青铜1-3:3-5, 白银1-3:6-8, 黄金1:9）
+        const MIN_RANK_INDEX = 9; // 低于此索引（即黑铁/青铜/白银）不允许报名
+
+        function getRankScore(tier) {
+            const idx = rankTiers.indexOf(tier);
+            if (tier === '辐能') return 2500;
+            if (idx === -1) return 0;
+            return idx * 100;
+        }
+
+        function getRankComment_jett(rank) { const score = getRankScore(rank); if (score >= 2300) return '哦？高手啊！看来有人能跟上我的速度了！'; if (score >= 1500) return '还不错嘛，至少不会被我甩太远。'; if (score >= 800) return '嗯……还需要修炼啊，但也不是不能带！'; return '这……你确定你不是来搞笑的？算了，我飞快，带你！'; }
+        function getRankComment_reyna(rank) { const score = getRankScore(rank); if (score >= 2300) return '呵……你的灵魂散发着强大的气息。值得我认真对待。'; if (score >= 1500) return '还凑合。但在我面前，你依然是猎物。'; if (score >= 800) return '弱小……但每个猎物都有成长的空间。'; return '这段位？你的灵魂需要更多的……滋养。多杀点人吧。'; }
+        function getRankComment_cypher(rank) { const score = getRankScore(rank); if (score >= 2300) return '我的情报显示，你是个不容小觑的对手。很好。'; if (score >= 1500) return '中等水平，我的摄像头见过很多这样的选手。'; if (score >= 800) return '还有提升空间。我建议你多看看对手的回放。'; return '嗯……我的绊线都比这段位有威慑力。但别灰心，信息就是力量。'; }
+        function getRankComment_sova(rank) { const score = getRankScore(rank); if (score >= 2300) return '侦察结果显示——强大的猎手！和你并肩作战会很愉快！'; if (score >= 1500) return '不错的实力！我的箭可以帮你更进一步。'; if (score >= 800) return '还在成长中的猎手！每个传奇都有起步的时候。'; return '嗯……猎头犬探测到一些……成长空间。多加练习，猎手！'; }
+        function getRankComment_clove(rank) { const score = getRankScore(rank); if (score >= 2300) return '哇塞你好厉害！大佬带带我～'; if (score >= 1500) return '不错不错！我们实力差不多嘛，一起冲！'; if (score >= 800) return '没关系没关系！只要开心就好啦～段位什么的慢慢来！'; return '嘿嘿，段位低不要紧的，有我在你就算死了也能爬起来！……等等，别的角色好像做不到这个。'; }
+
+        function getStatsComment_jett(s) { if (s.acs >= 250) return '不错嘛，这输出量跟我有得拼！'; if (s.acs >= 200) return '中规中矩，但要赢比赛还得再猛一点！'; return '这数据……你是不是经常在天上飞不下来？跟我学学突脸的勇气！'; }
+        function getStatsComment_reyna(s) { if (s.acs >= 250) return '嗯……你的灵魂味道不错，杀得够多。'; if (s.acs >= 200) return '及格了。但我每场都比你多吃几个灵魂球。'; return '这杀戮之力……还远远不够。让你的仇恨燃烧得更旺一些。'; }
+        function getStatsComment_cypher(s) { if (s.kast >= 75) return '极高的KAST值。你是一个懂得生存的人。我欣赏这一点。'; if (s.kast >= 65) return '数据在可接受范围内。我的档案已经更新了。'; return '这些数据告诉我一个故事……一个需要改进的故事。不过，每个人都有秘密。'; }
+        function getStatsComment_sova(s) { if (s.adr >= 160) return '伤害输出极高！你的每一击都像我的震荡箭一样精准！'; if (s.adr >= 130) return '数据稳定！你是个可靠的队友。'; return '伤害稍低，不过没关系，我的箭会帮你找到敌人的！'; }
+        function getStatsComment_clove(s) { if (s.kda >= 1.4) return '你好能打啊！都不需要我给你复活了！嘻嘻～'; if (s.kda >= 1.2) return '还不错哦！我给你放个烟你就更厉害了！'; return '数据嘛……不重要啦！反正有我在，死了还能爬起来！嘿嘿～'; }
+
+        function getScoreComment_jett(score) { if (score >= 2000) return '卧槽，大神？！你该不会是职业选手偷偷来的吧！'; if (score >= 1000) return '还挺能打的嘛！应该能上场了！'; if (score >= 0) return '嗯……得加把劲了，不然可跟不上我的速度哦！'; return '这分数……你确定不是在玩休闲模式？？算了我带你飞！'; }
+        function getScoreComment_reyna(score) { if (score >= 2000) return '你的灵魂很强大……也许值得我正眼相看。'; if (score >= 1000) return '有点意思。但在真正的战场上才能证明一切。'; if (score >= 0) return '这分数还需要更多的杀戮来提升。'; return '呵……看来你需要吞噬更多的灵魂球了。'; }
+        function getScoreComment_cypher(score) { if (score >= 2000) return '我的情报网显示，你是个危险人物。我喜欢。'; if (score >= 1000) return '可接受的分数。我会继续监视你的表现。'; if (score >= 0) return '中等偏下……我建议你检查一下自己的漏洞。'; return '嗯……我的绊线捕获的信息比这有价值多了。不过，比赛见真章。'; }
+        function getScoreComment_sova(score) { if (score >= 2000) return '侦察完毕——目标是顶级猎手！这是令人振奋的发现！'; if (score >= 1000) return '优秀的猎手！你的箭会命中目标的！'; if (score >= 0) return '还需要更多训练，但每个猎手都是这样成长的。'; return '呃……我的猎头犬好像对这个分数有点困惑。但没关系，猎手！'; }
+        function getScoreComment_clove(score) { if (score >= 2000) return '天哪你超强的！我要抱大腿！！'; if (score >= 1000) return '很不错哦！我们一定能拿下比赛的！'; if (score >= 0) return '还好啦还好啦！有我给你放烟你就是最强的！'; return '嘻嘻，分数低也没关系的～反正比赛就是要开心嘛！死了也没关系！'; }
+
+        const moodEmojis = { normal: '😐 待机中', happy: '😊 愉悦', serious: '🤨 认真', thinking: '🤔 思考中', excited: '😆 兴奋', impressed: '😮 惊讶', disappointed: '😔 遗憾' };
+
+        function startGame() {
+            const startScreen = document.getElementById('startScreen');
+            startScreen.classList.add('hidden');
+
+            if (!window.allPlayersData) {
+                fetch('/.netlify/functions/getScores')
+                    .then(r => r.json())
+                    .then(d => window.allPlayersData = d)
+                    .catch(e => console.warn('后台预取数据失败:', e));
+            }
+
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                document.getElementById('gameContainer').classList.add('active');
+                showRoleSelection();
+            }, 800);
+        }
+
+        function getCurrentAgent() { return agents[gameState.agentKey]; }
+
+        function setCharacter(agentKey, mood = 'normal') {
+            const agent = agents[agentKey];
+            if (!agent) return;
+            const nameTag = document.getElementById('characterNameTag'),
+                img = document.getElementById('characterImg');
+            document.getElementById('agentName').textContent = agent.name;
+            document.getElementById('agentRole').textContent = agent.role;
+            nameTag.style.display = 'block';
+            img.src = agent.fullImg;
+            img.alt = agent.name;
+            img.style.display = 'block';
+            document.getElementById('moodIndicator').textContent = moodEmojis[mood] || moodEmojis.normal;
+        }
+
+        function setMood(mood) { document.getElementById('moodIndicator').textContent = moodEmojis[mood] || moodEmojis.normal; }
+        function updateProgress(percent) { document.getElementById('progressFill').style.width = percent + '%'; }
+
+        function typeText(element, text, speed = 30) {
+            return new Promise((resolve) => {
+                element.innerHTML = '';
+                let i = 0;
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+
+                function scrollToBottom() {
+                    const box = document.getElementById('dialogueBox');
+                    if (box) box.scrollTop = box.scrollHeight;
+                }
+
+                function type() {
+                    if (i < text.length) {
+                        if (text.substring(i).startsWith('<')) {
+                            const endTag = text.indexOf('>', i);
+                            element.innerHTML = text.substring(0, endTag + 1);
+                            i = endTag + 1;
+                        } else { element.innerHTML = text.substring(0, i + 1); i++; }
+                        element.appendChild(cursor);
+                        scrollToBottom();
+                        setTimeout(type, speed);
+                    } else {
+                        element.innerHTML = text;
+                        scrollToBottom();
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        function showRoleSelection() {
+            updateProgress(5);
+            setMood('normal');
+            document.getElementById('dialogueSpeaker').textContent = 'SYSTEM // 系统';
+            typeText(document.getElementById('dialogueText'), '欢迎来到 <span class="highlight">HWVCTS6</span> 无畏契约锦标赛！请选择你的<span class="highlight">位置（可多选）</span>。<br><span style="font-size:14px; color:#ff8a80;">提示：你勾选的第一个位置将被视为你的【主玩位置】，随后将进入该位置的引导分支。</span>').then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in" id="roleContainer">
+                        <button class="choice-btn role-btn" data-role="duelist1" onclick="toggleRoleBtn(this, 'duelist1')">一突 — 打出致命一击</button>
+                        <button class="choice-btn role-btn" data-role="duelist2" onclick="toggleRoleBtn(this, 'duelist2')">二突 — 收割灵魂</button>
+                        <button class="choice-btn role-btn" data-role="sentinel" onclick="toggleRoleBtn(this, 'sentinel')">哨位 — 守卫后方</button>
+                        <button class="choice-btn role-btn" data-role="initiator" onclick="toggleRoleBtn(this, 'initiator')">先锋 — 侦察先行</button>
+                        <button class="choice-btn role-btn" data-role="controller" onclick="toggleRoleBtn(this, 'controller')">烟位 — 掌控战场</button>
+                    </div>
+                    <button class="next-btn fade-in" id="confirmRoleBtn" onclick="confirmRoles()" disabled style="margin-top:15px; opacity:0.5;">下 一 步 ▸</button>
+                `;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        let selectedRoles = [];
+
+        function toggleRoleBtn(btn, roleKey) {
+            if (selectedRoles.includes(roleKey)) {
+                selectedRoles = selectedRoles.filter(r => r !== roleKey);
+                btn.classList.remove('selected-role');
+            } else {
+                selectedRoles.push(roleKey);
+                btn.classList.add('selected-role');
+            }
+            updateRoleButtons();
+        }
+
+        function updateRoleButtons() {
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                const roleKey = btn.getAttribute('data-role');
+                const idx = selectedRoles.indexOf(roleKey);
+                btn.innerHTML = btn.innerHTML.replace(/<span class="role-badge".*?<\/span>/g, '');
+                if (idx > -1) {
+                    const badgeText = idx === 0 ? '主玩' : `次选`;
+                    const badgeColor = idx === 0 ? '#ff4655' : 'rgba(255,255,255,0.7)';
+                    btn.innerHTML += `<span class="role-badge" style="float:right; color:${badgeColor}; font-size:13px; font-weight:bold;">[${badgeText}]</span>`;
+                }
+            });
+            const nextBtn = document.getElementById('confirmRoleBtn');
+            if (selectedRoles.length > 0) {
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function confirmRoles() {
+            gameState.roles = selectedRoles;
+            gameState.role = selectedRoles[0];
+            gameState.agentKey = selectedRoles[0];
+            setCharacter(gameState.role, 'happy');
+            updateProgress(10);
+
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.greet).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepName()">继 续 ▸</button>`;
+            });
+        }
+
+        function stepName() {
+            updateProgress(20);
+            setMood('serious');
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.name).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="form-group fade-in">
+                        <label>你的姓名</label><input type="text" class="form-input" id="nameInput" placeholder="请输入2-4字中文姓名" maxlength="4">
+                        <div class="form-error" id="nameError"></div>
+                    </div><button class="next-btn fade-in" onclick="submitName()">确 认 ▸</button>`;
+            });
+        }
+
+        async function submitName() {
+            const input = document.getElementById('nameInput'),
+                error = document.getElementById('nameError'),
+                name = input.value.trim();
+            if (!/^[\u4e00-\u9fa5]{2,4}$/.test(name)) { error.textContent = '请输入2-4个中文字符'; input.style.borderColor = '#ff4655'; return; }
+
+            gameState.playerName = name;
+            document.getElementById('dialogueContent').innerHTML = `<p style="color:rgba(255,255,255,0.4); font-size:13px; text-align:right; margin-top:15px;">📡 正在搜索档案库...</p>`;
+
+            if (!window.allPlayersData) {
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                    else window.allPlayersData = [];
+                } catch (e) { window.allPlayersData = []; }
+            }
+
+            const existingPlayer = window.allPlayersData.find(p => p.player_name === name);
+            if (existingPlayer) {
+                stepNameExistsBranch(existingPlayer);
+            } else {
+                continueNormalNameStep(name);
+            }
+        }
+
+        function stepNameExistsBranch(player) {
+            setMood('thinking');
+            updateProgress(25);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.foundName(gameState.playerName, player.game_id)).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick='handleNameYes(${JSON.stringify(player)})'>${agent.dialogues.choiceYes}</button>
+                        <button class="choice-btn" onclick="handleNameNo()">${agent.dialogues.choiceNo}</button>
+                    </div>`;
+            });
+        }
+
+        function handleNameNo() {
+            gameState.gameId = '';
+            continueNormalNameStep(gameState.playerName);
+        }
+
+        function handleNameYes(player) {
+            gameState.gameId = player.game_id;
+            setMood('happy');
+            updateProgress(40);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.welcomeBack).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick="stepRank()">${agent.dialogues.choiceUpdate}</button>
+                        <button class="choice-btn" onclick="viewSignupsFromDialogue()">${agent.dialogues.choiceView}</button>
+                    </div>`;
+            });
+        }
+
+        function viewSignupsFromDialogue() {
+            viewSignups();
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.afterView).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="choices-container fade-in">
+                        <button class="choice-btn" onclick="stepRank()">${agent.dialogues.choiceUpdate}</button>
+                    </div>`;
+            });
+        }
+
+        function continueNormalNameStep(name) {
+            setMood('happy');
+            updateProgress(30);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.nameResponse(name)).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepGameId()">继 续 ▸</button>`;
+            });
+        }
+
+        function stepGameId() {
+            updateProgress(35);
+            setMood('serious');
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.gameId).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="form-group fade-in">
+                        <label>游戏ID（格式: 名字#数字编号）</label><input type="text" class="form-input" id="gameIdInput" placeholder="例如: Player#12345">
+                        <div class="form-error" id="gameIdError"></div>
+                    </div><button class="next-btn fade-in" onclick="submitGameId()">确 认 ▸</button>`;
+            });
+        }
+
+        function submitGameId() {
+            const input = document.getElementById('gameIdInput'),
+                error = document.getElementById('gameIdError'),
+                gameId = input.value.trim();
+            if (!/^.+#\d+$/.test(gameId)) { error.textContent = '格式不正确，应为: 名称#数字编号'; input.style.borderColor = '#ff4655'; return; }
+            gameState.gameId = gameId;
+            setMood('happy');
+            updateProgress(45);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.gameIdResponse(gameId)).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepRank()">继 续 ▸</button>`;
+            });
+        }
+
+        function stepRank() {
+            updateProgress(50);
+            setMood('thinking');
+            const agent = getCurrentAgent();
+            let options = rankTiers.map(r => `<option value="${r}">${r}</option>`).join('');
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.rank).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="form-group fade-in">
+                        <label>当前段位</label><select class="form-input" id="rankInput"><option value="">-- 请选择段位 --</option>${options}</select>
+                        <div class="form-error" id="rankError"></div>
+                    </div><button class="next-btn fade-in" onclick="submitRank()">确 认 ▸</button>`;
+            });
+        }
+
+        function submitRank() {
+            const input = document.getElementById('rankInput'),
+                error = document.getElementById('rankError'),
+                rank = input.value;
+            if (!rank) { error.textContent = '请选择你的段位'; return; }
+
+            const rankIndex = rankTiers.indexOf(rank);
+            if (rankIndex < MIN_RANK_INDEX) {
+                showRankTooLow(rank);
+                return;
+            }
+
+            gameState.rankTier = rank;
+            setMood('impressed');
+            updateProgress(60);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.rankResponse(rank)).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepStats()">继 续 ▸</button>`;
+            });
+        }
+
+        function showRankTooLow(rank) {
+            updateProgress(55);
+            setMood('disappointed');
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+
+            const rejectMsg = agent.dialogues.rankTooLow(rank);
+            typeText(document.getElementById('dialogueText'), rejectMsg).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="rank-reject-box fade-in">
+                        <div class="rank-reject-icon">🛡️</div>
+                        <div class="rank-reject-text">
+                            你当前的段位为 <span class="highlight-rank">${rank}</span><br>
+                            很遗憾，<span style="color:#ff4655; font-weight:700;">黄金以下</span>的选手暂时无法报名参赛。
+                        </div>
+                        <div class="rank-reject-min">📋 最低报名段位要求：<span style="color:#ffd700; font-weight:700;">黄金1</span></div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="next-btn fade-in" onclick="stepRank()" style="flex: 1; padding: 12px 10px; margin-top: 0; align-self: center; text-align: center; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);">🔄 重新选择段位</button>
+                        <button class="next-btn fade-in" onclick="viewSignups()" style="flex: 1; padding: 12px 10px; margin-top: 0; align-self: center; text-align: center;">📊 查看排行榜</button>
+                    </div>
+                    <p style="text-align:center; font-size:12px; color:rgba(255,255,255,0.3); margin-top:12px;">努力提升段位后再来挑战吧！我们赛场见 💪</p>
+                `;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        function stepStats() {
+            updateProgress(65);
+            setMood('serious');
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+            typeText(document.getElementById('dialogueText'), agent.dialogues.stats).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div style="background: rgba(255, 70, 85, 0.1); border-left: 3px solid #ff4655; padding: 10px; color: #ff8a80; font-size: 13px; font-weight: bold; margin-bottom: 15px; border-radius: 2px;">
+                        ⚠ 请确保填写的是本赛季排位场次大于等于10场后的数据。
+                    </div>
+                    <div class="stats-grid fade-in">
+                        <div class="stat-item"><div class="stat-label-row"><label>ACS</label></div><input type="number" class="form-input" id="acsInput" placeholder="例如: 230"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>回合伤害（ADR）</label></div><input type="number" class="form-input" id="adrInput" placeholder="例如: 150"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>KDA</label></div><input type="number" step="0.01" class="form-input" id="kdaInput" placeholder="例如: 1.5"></div>
+                        <div class="stat-item"><div class="stat-label-row"><label>KAST</label></div>
+                            <div class="kast-input-wrapper"><input type="number" class="form-input" id="kastInput" placeholder="例如: 72"><span class="kast-suffix">%</span></div>
+                        </div>
+                    </div><div class="form-error" id="statsError" style="margin-top:10px;"></div>
+                    <button class="next-btn fade-in" onclick="submitStats()" style="margin-top:15px;">确 认 ▸</button>`;
+
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        function submitStats() {
+            const acsVal = document.getElementById('acsInput').value.trim(),
+                adrVal = document.getElementById('adrInput').value.trim();
+            const kdaVal = document.getElementById('kdaInput').value.trim(),
+                kastVal = document.getElementById('kastInput').value.trim();
+            const error = document.getElementById('statsError');
+
+            if (!/^\d{2,3}$/.test(acsVal)) { error.textContent = 'ACS应为2-3位数字'; return; }
+            if (!/^\d{2,3}$/.test(adrVal)) { error.textContent = '回合伤害（ADR）应为2-3位数字'; return; }
+            const kdaNum = parseFloat(kdaVal);
+            if (isNaN(kdaNum) || kdaNum < 0 || kdaNum > 3 || !/^\d(\.\d{1,2})?$/.test(kdaVal)) { error.textContent = 'KDA应为0-3之间，最多2位小数'; return; }
+            if (!/^\d{2}$/.test(kastVal)) { error.textContent = 'KAST应为两位数字'; return; }
+
+            gameState.acs = parseInt(acsVal);
+            gameState.adr = parseInt(adrVal);
+            gameState.kda = parseFloat(kdaVal);
+            gameState.kast = parseInt(kastVal);
+            setMood('thinking');
+            updateProgress(75);
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueContent').innerHTML = '';
+
+            typeText(document.getElementById('dialogueText'), agent.dialogues.statsResponse({ acs: gameState.acs, adr: gameState.adr, kda: gameState.kda, kast: gameState.kast })).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `<button class="next-btn fade-in" onclick="stepQuestionnaire()">继 续 ▸</button>`;
+            });
+        }
+
+        function stepQuestionnaire() {
+            updateProgress(80);
+            setMood('serious');
+            document.getElementById('dialogueContent').innerHTML = '';
+            const msg = '数据记录完毕！最后一步，请点击下方链接前往问卷上传你的战绩截图。完成截图上传后，点击确认即可计算你的华为分。';
+            typeText(document.getElementById('dialogueText'), msg).then(() => {
+                document.getElementById('dialogueContent').innerHTML = `
+                    <div class="form-group fade-in" style="margin: 20px 0; text-align: center;">
+                        <a href="https://wj.qq.com/s2/27148065/f51c/" target="_blank" style="color:#ff4655; text-decoration:none; font-size:16px; font-weight:bold; border-bottom: 1px solid #ff4655; padding-bottom: 2px;">🔗 请点击链接问卷上传战绩信息</a>
+                    </div>
+                    <button class="next-btn fade-in" onclick="submitQuestionnaire()">我 已 提 交 问 卷 ▸</button>`;
+            });
+        }
+
+        async function submitQuestionnaire() {
+            gameState.dataSource = 'S6问卷收集';
+            setMood('happy');
+            updateProgress(88);
+            const content = document.getElementById('dialogueContent');
+
+            content.innerHTML = '';
+            await typeText(document.getElementById('dialogueText'), '好的！确认你已经上传截图了。正在为你计算华为分排名...');
+            content.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 15px;">正在计算排名并拉取全服数据...</p>`;
+
+            const rankScore = getRankScore(gameState.rankTier);
+
+            const roleWeights = {
+                'duelist1': { acs: 180, adr: 180, kda: 120, kast: 120 },
+                'duelist2': { acs: 150, adr: 150, kda: 150, kast: 150 },
+                'initiator': { acs: 120, adr: 120, kda: 150, kast: 210 },
+                'controller': { acs: 90, adr: 90, kda: 180, kast: 240 },
+                'sentinel': { acs: 120, adr: 90, kda: 210, kast: 180 }
+            };
+
+            const weight = roleWeights[gameState.role] || roleWeights['duelist1'];
+
+            const getArctanScore = (val, base, sd, maxWeight) => {
+                return maxWeight * (2 / Math.PI) * Math.atan((val - base) / sd);
+            };
+
+            const dataScore =
+                getArctanScore(gameState.acs, 200, 50, weight.acs) +
+                getArctanScore(gameState.adr, 130, 30, weight.adr) +
+                getArctanScore(gameState.kda, 1.4, 0.5, weight.kda) +
+                getArctanScore(gameState.kast, 70, 10, weight.kast);
+
+            gameState.hwScore = Math.round(rankScore + dataScore);
+
+            if (!window.allPlayersData || window.allPlayersData.length === 0) {
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                } catch (err) { console.warn('获取分数失败', err); }
+            }
+
+            let allScores = window.allPlayersData ? window.allPlayersData.map(p => p.hw_score).filter(s => s != null) : [];
+            allScores.push(gameState.hwScore);
+            allScores.sort((a, b) => b - a);
+            const rank = allScores.indexOf(gameState.hwScore) + 1;
+
+            const legendCount = Math.ceil(allScores.length * 0.30);
+            const middleCount = Math.ceil(allScores.length * 0.60);
+
+            if (rank <= legendCount) { gameState.preGroup = '传奇组'; } else if (rank <= middleCount) { gameState.preGroup = '中间组'; } else { gameState.preGroup = '挑战组'; }
+
+            showConfirmScreen();
+        }
+
+        function showConfirmScreen() {
+            updateProgress(95);
+            setMood('excited');
+            const agent = getCurrentAgent();
+            document.getElementById('dialogueSpeaker').textContent = `${agent.name} // ${agent.nameCN}`;
+            const content = document.getElementById('dialogueContent');
+            content.innerHTML = '';
+
+            typeText(document.getElementById('dialogueText'), agent.dialogues.result(gameState.hwScore)).then(() => {
+                const joinedRoles = gameState.roles.map(r => roleMap[r]).join(' / ');
+                content.innerHTML = `
+                    <div class="score-display fade-in">
+                        <div class="score-number">${gameState.hwScore}</div>
+                        <div class="score-label">HUAWEI SCORE // 华 为 分</div>
+                        <div class="group-badge">${gameState.preGroup}</div>
+                    </div>
+                    <div style="font-size:13px; color:rgba(255,255,255,0.3); text-align:center; margin-top:10px; line-height:1.8;">
+                        <p>选手: ${gameState.playerName} | ID: ${gameState.gameId}</p>
+                        <p>位置: ${joinedRoles} | 段位: ${gameState.rankTier}</p>
+                        <p>预分组状态: <span style="color:#ff4655; font-weight:bold;">${gameState.preGroup}</span></p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 25px;">
+                        <button class="next-btn fade-in submit-ripple-btn" onclick="completeSignup()" id="btnSubmitSignup" style="flex: 1; padding: 14px 10px; margin-top: 0; align-self: center; text-align: center;">提交以完成报名</button>
+                        <button class="next-btn fade-in" onclick="viewSignups()" style="flex: 1; padding: 14px 10px; margin-top: 0; align-self: center; text-align: center; background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);">查 看 报 名 情 况</button>
+                    </div>
+                `;
+                const box = document.getElementById('dialogueBox');
+                if (box) box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        function showModal(title, contentHtml) {
+            document.getElementById('modalTitle').innerHTML = title;
+            document.getElementById('modalContent').innerHTML = contentHtml;
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+
+        async function completeSignup() {
+            const btn = document.getElementById('btnSubmitSignup');
+            if (btn) { btn.disabled = true; btn.textContent = '提 交 中...'; btn.classList.remove('submit-ripple-btn'); }
+
+            const joinedRoles = gameState.roles.map(r => roleMap[r]).join(' / ');
+
+            const payload = {
+                player_name: gameState.playerName,
+                game_id: gameState.gameId,
+                player_role: joinedRoles,
+                rank_tier: gameState.rankTier,
+                acs: gameState.acs,
+                adr: gameState.adr,
+                kda: gameState.kda,
+                kast: gameState.kast,
+                data_source: gameState.dataSource,
+                hw_score: gameState.hwScore,
+                pre_group: gameState.preGroup
+            };
+
+            try {
+                const res = await fetch('/.netlify/functions/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('提交失败');
+
+                gameState.isSubmitted = true;
+                if (btn) { btn.textContent = '已 报 名'; btn.classList.remove('submit-ripple-btn'); }
+
+                if (window.allPlayersData) {
+                    const existingIndex = window.allPlayersData.findIndex(p => p.player_name === payload.player_name);
+                    if (existingIndex !== -1) { window.allPlayersData[existingIndex] = payload; } else { window.allPlayersData.push(payload); }
+                }
+
+                showModal('🎉 报名成功', `
+                    <div style="text-align: center; color: #81c784; margin-bottom: 20px; font-size: 15px;">✅ 您的报名数据已成功记录（如果是重复报名，已覆盖之前的旧数据）！请加瓦群（welink群号：590599402）等待后续比赛通知。</div>
+                    <button class="next-btn" onclick="location.reload()" style="width: 100%; text-align: center;">重 新 报 名 其 他 账 号</button>
+                `);
+            } catch (err) {
+                gameState.isSubmitted = false;
+                if (btn) { btn.disabled = false; btn.textContent = '提交以完成报名'; btn.classList.add('submit-ripple-btn'); }
+                showModal('❌ 报名失败', `
+                    <div style="text-align: center; color: #ff8a80; margin-bottom: 20px; font-size: 15px;">数据提交失败，因网络原因连接服务器超时，请检查后重试。</div>
+                    <button class="next-btn" onclick="closeModal()" style="width: 100%; text-align: center; background: rgba(255,255,255,0.1);">关 闭 并 重 试</button>
+                `);
+            }
+        }
+
+        async function viewSignups() {
+            if (!window.allPlayersData || window.allPlayersData.length === 0) {
+                const btn = document.getElementById('topViewBtn');
+                let originalText = btn ? btn.innerHTML : '';
+                if (btn) btn.innerHTML = '拉取中...';
+                try {
+                    const fetchRes = await fetch('/.netlify/functions/getScores');
+                    if (fetchRes.ok) window.allPlayersData = await fetchRes.json();
+                } catch (e) { console.warn('获取分数失败', e); }
+                if (btn) btn.innerHTML = originalText;
+            }
+
+            let data = window.allPlayersData || [];
+            let displayData = [...data];
+
+            if (!gameState.isSubmitted && gameState.hwScore > 0) {
+                displayData = displayData.filter(p => p.player_name !== gameState.playerName);
+                displayData.push({
+                    player_name: gameState.playerName + ' <span style="color:#ff4655; font-size:12px;">(当前)</span>',
+                    game_id: gameState.gameId,
+                    hw_score: gameState.hwScore,
+                    player_role: gameState.roles.map(r => roleMap[r]).join(' / ')
+                });
+            }
+
+            displayData.sort((a, b) => b.hw_score - a.hw_score);
+
+            const totalPlayers = displayData.length;
+            const top30 = Math.ceil(totalPlayers * 0.30);
+            const top60 = Math.ceil(totalPlayers * 0.60);
+
+            let listHtml = `
+                <div class="leaderboard-item leaderboard-header">
+                    <div style="text-align: center;">排名</div>
+                    <div>姓名 / 游戏ID</div>
+                    <div style="text-align: center;">位置</div>
+                    <div style="text-align: right;">华为分</div>
+                </div>
+                <div class="leaderboard-list">
+            `;
+
+            displayData.forEach((p, index) => {
+                const currentRank = index + 1;
+
+                if (currentRank === 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider legend-divider"><span>传奇组 (Top 30%)</span></div>`;
+                } else if (currentRank === top30 + 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider middle-divider"><span>中间组 (30% - 60%)</span></div>`;
+                } else if (currentRank === top60 + 1 && totalPlayers > 0) {
+                    listHtml += `<div class="group-divider challenger-divider"><span>挑战组 (60% - 100%)</span></div>`;
+                }
+
+                let rankBadge = currentRank === 1 ? '🥇 1' : currentRank === 2 ? '🥈 2' : currentRank === 3 ? '🥉 3' : currentRank;
+                let rankClass = currentRank === 1 ? 'rank-1' : currentRank === 2 ? 'rank-2' : currentRank === 3 ? 'rank-3' : '';
+
+                let isCurrent = p.player_name && p.player_name.includes('(当前)');
+                let rowStyle = isCurrent ? 'background: rgba(255, 70, 85, 0.15); border: 1px solid rgba(255, 70, 85, 0.5);' : '';
+
+                listHtml += `
+                    <div class="leaderboard-item ${rankClass}" style="${rowStyle}">
+                        <div style="font-weight: 900; color: rgba(255,255,255,0.7); text-align: center; font-size: 15px;">${rankBadge}</div>
+                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-left: 5px;">
+                            ${p.player_name || '-'}
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top:2px;">${p.game_id || '-'}</div>
+                        </div>
+                        <div style="text-align: center; font-size: 11px;">${p.player_role || '-'}</div>
+                        <div style="text-align: right; font-weight: bold; font-size: 16px; color: #ff4655;">${p.hw_score || 0}</div>
+                    </div>
+                `;
+            });
+            listHtml += `</div>`;
+
+            showModal('📊 报名排行榜分布', listHtml);
+        }
+    </script>
+
+</body>
+
+</html>
