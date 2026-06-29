@@ -1593,7 +1593,7 @@
             typeText(document.getElementById('dialogueText'), agent.dialogues.rank).then(() => {
                 document.getElementById('dialogueContent').innerHTML = `
                     <div class="form-group fade-in">
-                        <label>当前段位（3赛季最高）</label><select class="form-input" id="rankInput"><option value="">-- 请选择段位 --</option>${options}</select>
+                        <label>最近3个小赛季最高段位</label><select class="form-input" id="rankInput"><option value="">-- 请选择段位 --</option>${options}</select>
                         <div class="form-error" id="rankError"></div>
                     </div><button class="next-btn fade-in" onclick="submitRank()">确 认 ▸</button>`;
             });
