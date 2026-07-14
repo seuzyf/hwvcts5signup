@@ -4,10 +4,10 @@ const { createClient } = require('@supabase/supabase-js');
 // 核心配置区：方便后期统一调整比例和参数
 // ==========================================
 const CONFIG = {
-    // 1. 组别比例分布
-    groupProportions: {
-        legend: 0.30, // 传奇组 (Top 30%)
-        middle: 0.60  // 中间组 (30% - 60%)
+    // 1. 组别固定人数分配
+    groupLimits: {
+        legend: 48, // 传奇组 48人
+        middle: 48  // 中坚组 48人 (排位 49-96)
     },
     
     // 2. 各位置数据分权重 (单项满分上限，总和 ±600分)
@@ -128,9 +128,8 @@ exports.handler = async (event) => {
         // 5. 按照新计算的华为分降序排列，计算全服组别分布
         allPlayers.sort((a, b) => b.new_hw_score - a.new_hw_score);
 
-        const totalPlayers = allPlayers.length;
-        const legendCount = Math.ceil(totalPlayers * CONFIG.groupProportions.legend);
-        const middleCount = Math.ceil(totalPlayers * CONFIG.groupProportions.middle);
+        const legendCount = CONFIG.groupLimits.legend;
+        const middleCount = legendCount + CONFIG.groupLimits.middle; // 中坚组的累积排名阈值（前96名）
 
         const updatePromises = [];
 
@@ -142,7 +141,7 @@ exports.handler = async (event) => {
             if (rank <= legendCount) {
                 newGroup = '传奇组';
             } else if (rank <= middleCount) {
-                newGroup = '中间组';
+                newGroup = '中坚组';
             }
 
             // 对比数据库内旧记录，若有变化才发起请求，节省资源
